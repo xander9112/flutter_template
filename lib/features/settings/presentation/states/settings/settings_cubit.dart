@@ -17,7 +17,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   final AppLogger _logger;
 
   Future<void> init() async {
-    _logger.info('SETTINGS INIT');
+    // _logger.info('SETTINGS INIT');
     _preferences = await SharedPreferences.getInstance();
 
     final modeStr = _preferences.getString('theme_mode');
@@ -34,7 +34,7 @@ class SettingsCubit extends Cubit<SettingsState> {
         emit(state.copyWith(themeMode: ThemeMode.system));
     }
 
-    _logger.info('SETTINGS READY');
+    // _logger.info('SETTINGS READY');
   }
 
   void changeTheme(ThemeMode value) {
@@ -44,13 +44,13 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> initSettingsFromServer() async {
-    _logger.info('SETTINGS FROM SERVER INIT');
+    // _logger.info('SETTINGS FROM SERVER INIT');
 
     await Future.delayed(Duration(seconds: 3));
 
     emit(state.copyWith(isWork: true));
 
-    _logger.info('SETTINGS FROM SERVER READY');
+    // _logger.info('SETTINGS FROM SERVER READY');
   }
 
   void changeWorkStatus() {

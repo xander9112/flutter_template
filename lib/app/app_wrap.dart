@@ -22,7 +22,11 @@ class _AppWrapState extends State<AppWrap> {
 
   @override
   void didChangeDependencies() {
-    _appScopeHolder = AppScopeHolder(ScopeProvider.of<RootScope>(context)!);
+    _appScopeHolder = AppScopeHolder(
+      ScopeProvider.of<RootScope>(context)!,
+      authScope: ScopeProvider.of<AuthScope>(context)!,
+      settingsScope: ScopeProvider.of<SettingsScope>(context)!,
+    );
 
     _appScopeHolder.create();
 
@@ -36,7 +40,7 @@ class _AppWrapState extends State<AppWrap> {
       child: ScopeBuilder<AppScope>(
         builder: (context, scope) {
           return StreamBuilder(
-            stream: scope?.authManager.stage,
+            stream: scope?.authScope.authManager.stage,
             initialData: AuthStage.initializing,
             builder: (context, snapshot) {
               if (scope == null || snapshot.data == AuthStage.initializing) {

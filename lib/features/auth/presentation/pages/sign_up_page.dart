@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/app/root_scope.dart';
+import 'package:quiz/features/auth/di/auth_scope.dart';
 import 'package:yx_scope_flutter/yx_scope_flutter.dart';
 
 @RoutePage()
@@ -14,7 +14,7 @@ class SignUpPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            ScopeProvider.of<RootScope>(context)?.authManagerDep.get.signUp();
+            ScopeProvider.of<AuthScope>(context)?.authManager.signUp();
           },
           child: Text('Sign In'),
         ),

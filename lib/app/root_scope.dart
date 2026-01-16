@@ -1,37 +1,35 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:quiz/core/_core.dart';
 import 'package:quiz/features/_features.dart';
 import 'package:yx_scope/yx_scope.dart';
 
-import '../navigation/app_router.dart';
-
 abstract class RootScope implements Scope {
   Dep<AppLogger> get loggerDep;
-  Dep<RootStackRouter> get routerDep;
-  Dep<AuthManager> get authManagerDep;
 
   SettingsScopeHolder get settingsScopeHolder;
+  AuthScopeHolder get authScopeHolder;
 }
 
 class RootScopeContainer extends ScopeContainer implements RootScope {
   RootScopeContainer() : super(name: 'RootScope');
 
   @override
-  List<Set<AsyncDep<dynamic>>> get initializeQueue => [
-    {_settingsScopeHolder},
-  ];
-
-  @override
   late final Dep<AppLogger> loggerDep = dep<AppLogger>(() => AppLogger());
 
   @override
-  late final Dep<AuthManager> authManagerDep = dep<AuthManager>(
-    () => AuthManager(logger: loggerDep.get),
-  );
+  List<Set<AsyncDep<dynamic>>> get initializeQueue => [
+    {_settingsScopeHolder, _authScopeHolder},
+  ];
 
   late final AsyncDep<SettingsScopeHolder> _settingsScopeHolder =
       rawAsyncDep<SettingsScopeHolder>(
-        () => SettingsScopeHolder(),
+        () => SettingsScopeHolder(this),
+        init: (dep) => dep.create(),
+        dispose: (dep) => dep.drop(),
+      );
+
+  late final AsyncDep<AuthScopeHolder> _authScopeHolder =
+      rawAsyncDep<AuthScopeHolder>(
+        () => AuthScopeHolder(this),
         init: (dep) => dep.create(),
         dispose: (dep) => dep.drop(),
       );
@@ -40,9 +38,7 @@ class RootScopeContainer extends ScopeContainer implements RootScope {
   SettingsScopeHolder get settingsScopeHolder => _settingsScopeHolder.get;
 
   @override
-  late final Dep<RootStackRouter> routerDep = dep<RootStackRouter>(
-    () => AppRouter(authManager: authManagerDep.get),
-  );
+  AuthScopeHolder get authScopeHolder => _authScopeHolder.get;
 }
 
 class RootScopeHolder extends ScopeHolder<RootScopeContainer> {

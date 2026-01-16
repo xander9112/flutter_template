@@ -56,7 +56,7 @@ class AuthManager extends ChangeNotifier {
   }
 
   Future<void> init() async {
-    _logger.info('AUTH INIT');
+    // _logger.info('AUTH INIT');
 
     _prefs = await SharedPreferences.getInstance();
 
@@ -76,7 +76,7 @@ class AuthManager extends ChangeNotifier {
       _stage.add(AuthStage.authenticated);
     }
 
-    _logger.info('AUTH READY');
+    // _logger.info('AUTH READY');
 
     notifyListeners();
   }

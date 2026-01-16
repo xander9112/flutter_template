@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz/app/root_scope.dart';
 import 'package:quiz/features/_features.dart';
 import 'package:yx_scope_flutter/yx_scope_flutter.dart';
 
@@ -19,9 +18,7 @@ class SettingsPage extends StatelessWidget {
             child: ListView(
               children: [
                 ListTile(
-                  onTap: ScopeProvider.of<RootScope>(
-                    context,
-                  )?.authManagerDep.get.lock,
+                  onTap: ScopeProvider.of<AuthScope>(context)?.authManager.lock,
                   title: Text('Lock'),
                 ),
                 ScopeBuilder<SettingsScope>.withPlaceholder(
@@ -76,9 +73,7 @@ class SettingsPage extends StatelessWidget {
             titleTextStyle: TextStyle(
               color: Theme.of(context).colorScheme.error,
             ),
-            onTap: ScopeProvider.of<RootScope>(
-              context,
-            )?.authManagerDep.get.signOut,
+            onTap: ScopeProvider.of<AuthScope>(context)?.authManager.signOut,
             title: Text('SignOut', textAlign: TextAlign.center),
           ),
           SizedBox(height: 32),

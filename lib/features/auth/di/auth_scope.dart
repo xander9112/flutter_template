@@ -11,13 +11,15 @@ class AuthScopeContainer extends ChildScopeContainer<RootScope>
     implements AuthScope {
   AuthScopeContainer({required super.parent}) : super(name: 'AuthScope');
 
-  // @override
-  // List<Set<AsyncDep<dynamic>>> get initializeQueue => [
-  //   {_authService},
-  // ];
+  @override
+  List<Set<AsyncDep<dynamic>>> get initializeQueue => [{}];
+
+  late final Dep<AuthManager> _manager = dep<AuthManager>(
+    () => AuthManager(logger: AppLogger()),
+  );
 
   @override
-  AuthManager get authManager => parent.authManagerDep.get;
+  AuthManager get authManager => _manager.get;
 }
 
 class AuthScopeHolder

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/app/_app.dart';
 import 'package:quiz/features/_features.dart';
+import 'package:quiz/navigation/_navigation.dart';
 import 'package:yx_scope_flutter/yx_scope_flutter.dart';
 
 class App extends StatefulWidget {
@@ -38,25 +39,50 @@ class _AppState extends State<App> {
             holder: scope.settingsScopeHolder,
             child: ScopeBuilder<SettingsScope>.withPlaceholder(
               builder: (context, settingsScope) {
-                return BlocProvider<SettingsCubit>.value(
-                  value: settingsScope.settingsCubit,
-                  child: BlocBuilder<SettingsCubit, SettingsState>(
-                    builder: (context, state) {
-                      return MaterialApp.router(
-                        debugShowCheckedModeBanner: false,
-                        themeMode: state.themeMode,
-                        theme: ThemeData.light(),
-                        darkTheme: ThemeData.dark(),
-                        routerConfig: scope.routerDep.get.config(
-                          includePrefixMatches: true,
-                          reevaluateListenable: scope.authManagerDep.get,
-                          // deepLinkBuilder: (deepLink) {
-                          // return DeepLink.path('/profile/info');
-                          // },
+                return ScopeProvider<AuthScope>(
+                  holder: scope.authScopeHolder,
+                  child: ScopeBuilder<AuthScope>.withPlaceholder(
+                    builder: (context, authScope) {
+                      return ScopeProvider<NavigationScope>(
+                        holder: NavigationScopeHolder(authScope)..create(),
+                        child: ScopeBuilder<NavigationScope>.withPlaceholder(
+                          builder: (context, navScope) {
+                            return BlocProvider<SettingsCubit>.value(
+                              value: settingsScope.settingsCubit,
+                              child: BlocBuilder<SettingsCubit, SettingsState>(
+                                builder: (context, state) {
+                                  return BlocProvider<SettingsCubit>.value(
+                                    value: settingsScope.settingsCubit,
+                                    child: BlocBuilder<SettingsCubit, SettingsState>(
+                                      builder: (context, state) {
+                                        return MaterialApp.router(
+                                          debugShowCheckedModeBanner: false,
+                                          themeMode: state.themeMode,
+                                          theme: ThemeData.light(),
+                                          darkTheme: ThemeData.dark(),
+                                          routerConfig: navScope.router.config(
+                                            includePrefixMatches: true,
+                                            reevaluateListenable:
+                                                authScope.authManager,
+                                            // deepLinkBuilder: (deepLink) {
+                                            // return DeepLink.path('/profile/info');
+                                            // },
+                                          ),
+                                          builder: (context, child) {
+                                            return AppWrap(
+                                              settingsState: state,
+                                              child: child,
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          },
                         ),
-                        builder: (context, child) {
-                          return AppWrap(settingsState: state, child: child);
-                        },
                       );
                     },
                   ),

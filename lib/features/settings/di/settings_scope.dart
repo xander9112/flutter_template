@@ -1,3 +1,4 @@
+import 'package:quiz/app/root_scope.dart';
 import 'package:quiz/core/_core.dart';
 import 'package:quiz/features/settings/_settings.dart';
 import 'package:yx_scope/yx_scope.dart';
@@ -6,8 +7,10 @@ abstract class SettingsScope implements Scope {
   SettingsCubit get settingsCubit;
 }
 
-class SettingsScopeContainer extends ScopeContainer implements SettingsScope {
-  SettingsScopeContainer() : super(name: 'SettingsScope');
+class SettingsScopeContainer extends ChildScopeContainer<RootScope>
+    implements SettingsScope {
+  SettingsScopeContainer({required super.parent})
+    : super(name: 'SettingsScope');
 
   @override
   List<Set<AsyncDep<dynamic>>> get initializeQueue => [
@@ -24,9 +27,12 @@ class SettingsScopeContainer extends ScopeContainer implements SettingsScope {
   SettingsCubit get settingsCubit => _settingsDep.get;
 }
 
-class SettingsScopeHolder extends ScopeHolder<SettingsScopeContainer> {
-  SettingsScopeHolder()
+class SettingsScopeHolder
+    extends
+        BaseChildScopeHolder<SettingsScope, SettingsScopeContainer, RootScope> {
+  SettingsScopeHolder(super.parent)
     : super(scopeObservers: [ScopeObserverImpl(logger: AppLogger())]);
   @override
-  SettingsScopeContainer createContainer() => SettingsScopeContainer();
+  SettingsScopeContainer createContainer(RootScope parent) =>
+      SettingsScopeContainer(parent: parent);
 }
