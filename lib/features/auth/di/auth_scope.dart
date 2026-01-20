@@ -14,6 +14,8 @@ class AuthScopeContainer extends ChildScopeContainer<RootScope>
   @override
   List<Set<AsyncDep<dynamic>>> get initializeQueue => [{}];
 
+  // late final Dep<AuthRepository> _authRepositoryDep = dep<AuthRepository>(() => AuthRepositoryImpl(dataSource: RemoteAuthDataSource(pa)))
+
   late final Dep<AuthManager> _manager = dep<AuthManager>(
     () => AuthManager(logger: AppLogger()),
   );
