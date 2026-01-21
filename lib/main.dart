@@ -1,9 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:quiz/app/_app.dart';
+import 'package:quiz/runner/app_runner.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-void main() {
+void main(List<String> arguments) {
   setPathUrlStrategy();
 
-  runApp(const App());
+  print('MAIN');
+  AppRunner(.prod).run(arguments);
 }

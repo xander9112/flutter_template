@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:quiz/core/_core.dart';
 import 'package:quiz/features/_features.dart';
-import 'package:quiz/navigation/app_router.dart';
+import 'package:quiz/router/app_auto_router.dart';
 import 'package:yx_scope/yx_scope.dart';
 
 abstract class NavigationScope implements Scope {
@@ -18,7 +18,7 @@ class NavigationScopeContainer extends ChildScopeContainer<AuthScope>
   List<Set<AsyncDep<dynamic>>> get initializeQueue => [{}];
 
   @override
-  RootStackRouter get router => AppRouter(authManager: parent.authManager);
+  RootStackRouter get router => AppAutoRouter();
 }
 
 class NavigationScopeHolder

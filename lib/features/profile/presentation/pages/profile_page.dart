@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/navigation/app_router.gr.dart';
+import 'package:quiz/router/app_auto_router.gr.dart';
 
 @RoutePage()
 class ProfileRootPage extends StatelessWidget {

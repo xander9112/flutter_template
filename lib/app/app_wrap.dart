@@ -23,7 +23,7 @@ class _AppWrapState extends State<AppWrap> {
   @override
   void didChangeDependencies() {
     _appScopeHolder = AppScopeHolder(
-      ScopeProvider.of<RootScope>(context)!,
+      context.rootScope,
       authScope: ScopeProvider.of<AuthScope>(context)!,
       settingsScope: ScopeProvider.of<SettingsScope>(context)!,
     );
@@ -37,23 +37,14 @@ class _AppWrapState extends State<AppWrap> {
   Widget build(BuildContext context) {
     return ScopeProvider<AppScope>(
       holder: _appScopeHolder,
-      child: ScopeBuilder<AppScope>(
+      child: ScopeBuilder<AppScope>.withPlaceholder(
+        placeholder: SplashPage(),
         builder: (context, scope) {
-          return StreamBuilder(
-            stream: scope?.authScope.authManager.stage,
-            initialData: AuthStage.initializing,
-            builder: (context, snapshot) {
-              if (scope == null || snapshot.data == AuthStage.initializing) {
-                return SplashPage();
-              }
+          if (widget.settingsState.isWork) {
+            return InWorkPage();
+          }
 
-              if (widget.settingsState.isWork) {
-                return InWorkPage();
-              }
-
-              return widget.child ?? SizedBox.shrink();
-            },
-          );
+          return widget.child ?? SizedBox.shrink();
         },
       ),
     );

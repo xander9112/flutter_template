@@ -1,46 +1,31 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/app/_app.dart';
-import 'package:quiz/features/_features.dart';
-import 'package:quiz/navigation/_navigation.dart';
+import 'package:quiz/features/auth/di/auth_scope.dart';
+import 'package:quiz/features/settings/di/settings_scope.dart';
+import 'package:quiz/features/settings/presentation/states/settings/settings_cubit.dart';
+import 'package:quiz/navigation/navigation_scope.dart';
 import 'package:yx_scope_flutter/yx_scope_flutter.dart';
 
-class App extends StatefulWidget {
-  const App({super.key});
+class AppRoot extends StatelessWidget {
+  const AppRoot({super.key, required this.diContainer, required this.router});
 
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
-  late final RootScopeHolder _rootScopeHolder;
-
-  @override
-  void initState() {
-    _rootScopeHolder = RootScopeHolder()..create();
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _rootScopeHolder.drop();
-
-    super.dispose();
-  }
+  final RootScopeHolder diContainer;
+  final RootStackRouter router;
 
   @override
   Widget build(BuildContext context) {
     return ScopeProvider<RootScope>(
-      holder: _rootScopeHolder,
+      holder: diContainer,
       child: ScopeBuilder<RootScope>.withPlaceholder(
         builder: (context, scope) {
           return ScopeProvider<SettingsScope>(
-            holder: scope.settingsScopeHolder,
+            holder: SettingsScopeHolder(scope)..create(),
             child: ScopeBuilder<SettingsScope>.withPlaceholder(
               builder: (context, settingsScope) {
                 return ScopeProvider<AuthScope>(
-                  holder: scope.authScopeHolder,
+                  holder: AuthScopeHolder(scope)..create(),
                   child: ScopeBuilder<AuthScope>.withPlaceholder(
                     builder: (context, authScope) {
                       return ScopeProvider<NavigationScope>(

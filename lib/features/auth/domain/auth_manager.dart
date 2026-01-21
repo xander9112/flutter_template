@@ -5,7 +5,6 @@ import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 enum AuthStage {
-  initializing, // splash
   unauthenticated, // login / register
   onboarding, // onboarding (1 раз)
   locked, // pin / biometrics
@@ -22,7 +21,7 @@ class AuthManager extends ChangeNotifier {
   static const _kHasPin = 'has_pin';
 
   final BehaviorSubject<AuthStage> _stage = BehaviorSubject.seeded(
-    AuthStage.initializing,
+    AuthStage.unauthenticated,
   );
 
   BehaviorSubject<AuthStage> get stage => _stage;

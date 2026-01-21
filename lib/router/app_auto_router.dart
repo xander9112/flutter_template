@@ -1,14 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:quiz/features/_features.dart';
-import 'package:quiz/navigation/app_router.gr.dart';
 import 'package:quiz/navigation/transitions/_transitions.dart';
+import 'package:quiz/router/app_auto_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Flow|Page|Screen,Route')
-class AppRouter extends RootStackRouter {
-  final AuthManager _authManager;
-
-  AppRouter({required AuthManager authManager}) : _authManager = authManager;
-
+class AppAutoRouter extends RootStackRouter {
   @override
   RouteType get defaultRouteType => RouteType.adaptive();
 
@@ -16,7 +11,6 @@ class AppRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     CustomRoute(
       path: '/',
-      guards: [RootGuard(_authManager)],
       page: TabsWrapperRoute.page,
       transitionsBuilder: TransitionsBuilders.noTransition,
       initial: true,

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:quiz/features/auth/di/auth_scope.dart';
-import 'package:quiz/navigation/app_router.gr.dart';
+import 'package:quiz/router/app_auto_router.gr.dart';
 import 'package:yx_scope_flutter/yx_scope_flutter.dart';
 
 @RoutePage()
