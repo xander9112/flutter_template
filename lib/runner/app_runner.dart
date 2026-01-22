@@ -1,17 +1,17 @@
 import 'dart:async';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/app/app.dart';
 import 'package:quiz/app/app_env.dart';
+import 'package:quiz/app/error_screen.dart';
 import 'package:quiz/app/root_scope.dart';
 import 'package:quiz/features/debug/domain/debug_service.dart';
 import 'package:quiz/features/debug/domain/i_debug_service.dart';
-import 'package:quiz/router/app_router.dart';
 import 'package:quiz/runner/timer_runner.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 part 'errors_handlers.dart';
 
@@ -36,7 +36,7 @@ class AppRunner {
   late IDebugService _debugService;
 
   /// Роутер приложения
-  late RootStackRouter router;
+  // late RootStackRouter router;
 
   /// Таймер для отслеживания времени инициализации приложения
   late TimerRunner _timerRunner;
@@ -56,9 +56,6 @@ class AppRunner {
       // Инициализация приложения
       await _initApp();
 
-      // Инициализация роутера
-      router = AppRouter.createRouter(_debugService);
-
       final diContainer = await _initDependencies(
         debugService: _debugService,
         env: env,
@@ -66,8 +63,8 @@ class AppRunner {
       );
       // Инициализация метода обработки ошибок
       _initErrorHandlers(_debugService);
-      print('dawsdas');
-      runApp(AppRoot(diContainer: diContainer, router: router));
+
+      runApp(AppRoot(diContainer: diContainer));
       await _onAppLoaded();
     } on Object catch (e, stackTrace) {
       await _onAppLoaded();
@@ -75,13 +72,13 @@ class AppRunner {
 
       /// Если произошла ошибка при инициализации приложения,
       /// то запускаем экран ошибки
-      // runApp(
-      //   ErrorScreen(
-      //     error: e,
-      //     stackTrace: stackTrace,
-      //     onRetry: () => run(arguments),
-      //   ),
-      // );
+      runApp(
+        ErrorScreen(
+          error: e,
+          stackTrace: stackTrace,
+          onRetry: () => run(arguments),
+        ),
+      );
     }
   }
 
@@ -90,6 +87,9 @@ class AppRunner {
   Future<void> _initApp() async {
     // Запрет на поворот экрана
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    // Задает стратегию URL-адресации вашего веб-приложения, используя пути вместо префикса в начале URL.
+    setPathUrlStrategy();
 
     // Заморозка первого кадра (сплеш)
     WidgetsBinding.instance.deferFirstFrame();
@@ -110,26 +110,11 @@ class AppRunner {
     required TimerRunner timerRunner,
   }) async {
     debugService.log(() => 'Тип сборки: ${env.name}');
+
     final diContainer = RootScopeHolder(env: env, debugService: debugService);
+
     await diContainer.create();
-    // .init(
-    //   onProgress: (name) => timerRunner.logOnProgress(name),
-    //   onComplete: (name) {
-    //     timerRunner
-    //       ..logOnComplete(name)
-    //       ..stop();
-    //   },
-    //   onError: (message, error, [stackTrace]) {
-    //     timerRunner.stop();
-    //     _debugService.logError(message, error: error, stackTrace: stackTrace);
-    //     throw Exception('Ошибка инициализации зависимостей: $message');
-    //   },
-    // ).timeout(
-    //   const Duration(seconds: 7),
-    //   onTimeout: () {
-    //     throw Exception('Превышено время ожидания инициализации зависимостей');
-    //   },
-    // );
+
     return diContainer;
   }
 }

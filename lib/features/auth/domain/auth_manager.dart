@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/widgets.dart';
-import 'package:quiz/core/app_logger.dart';
+import 'package:quiz/features/debug/_debug.dart';
 import 'package:rxdart/subjects.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -12,9 +12,13 @@ enum AuthStage {
 }
 
 class AuthManager extends ChangeNotifier {
-  AuthManager({required AppLogger logger}) : _logger = logger;
+  AuthManager({required IDebugService debugService})
+    : _debugService = debugService;
 
-  final AppLogger _logger;
+  final IDebugService _debugService;
+
+  final bool isMustLogin = true;
+  final bool isMustVerify = true;
 
   static const _kOnboardingDone = 'onboarding_done';
   static const _kHasSession = 'has_session';
@@ -31,6 +35,8 @@ class AuthManager extends ChangeNotifier {
   List<PageRouteInfo>? _pendingRoutes;
 
   List<PageRouteInfo>? get pendingRoutes => _pendingRoutes;
+
+  bool get isSignIn => stage.value == AuthStage.authenticated;
 
   void savePending(List<RouteMatch> matches) {
     if (matches.isEmpty) return;
@@ -63,7 +69,7 @@ class AuthManager extends ChangeNotifier {
 
     final hasSession = _prefs.getBool(_kHasSession) ?? false;
     final onboardingDone = _prefs.getBool(_kOnboardingDone) ?? false;
-    final hasPin = _prefs.getBool(_kHasPin) ?? true;
+    final hasPin = isMustVerify ? _prefs.getBool(_kHasPin) ?? true : false;
 
     if (!onboardingDone) {
       _stage.add(AuthStage.onboarding);
@@ -90,7 +96,11 @@ class AuthManager extends ChangeNotifier {
 
   Future<void> signIn() async {
     await _prefs.setBool(_kHasSession, true);
-    _stage.add(AuthStage.locked);
+    if (isMustVerify) {
+      _stage.add(AuthStage.locked);
+    } else {
+      _stage.add(AuthStage.authenticated);
+    }
     notifyListeners();
   }
 

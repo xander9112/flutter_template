@@ -69,13 +69,30 @@ class SettingsPage extends StatelessWidget {
               ],
             ),
           ),
-          ListTile(
-            titleTextStyle: TextStyle(
-              color: Theme.of(context).colorScheme.error,
-            ),
-            onTap: ScopeProvider.of<AuthScope>(context)?.authManager.signOut,
-            title: Text('SignOut', textAlign: TextAlign.center),
+          ScopeBuilder<AuthScope>.withPlaceholder(
+            builder: (context, scope) {
+              return StreamBuilder(
+                initialData: scope.authManager.stage,
+                stream: scope.authManager.stage,
+                builder: (context, snapshot) {
+                  if (scope.authManager.isSignIn) {
+                    return ListTile(
+                      titleTextStyle: TextStyle(
+                        color: Theme.of(context).colorScheme.error,
+                      ),
+                      onTap: ScopeProvider.of<AuthScope>(
+                        context,
+                      )?.authManager.signOut,
+                      title: Text('SignOut', textAlign: TextAlign.center),
+                    );
+                  }
+
+                  return SizedBox.shrink();
+                },
+              );
+            },
           ),
+
           SizedBox(height: 32),
         ],
       ),

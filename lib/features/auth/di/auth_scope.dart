@@ -17,7 +17,7 @@ class AuthScopeContainer extends ChildScopeContainer<RootScope>
   // late final Dep<AuthRepository> _authRepositoryDep = dep<AuthRepository>(() => AuthRepositoryImpl(dataSource: RemoteAuthDataSource(pa)))
 
   late final Dep<AuthManager> _manager = dep<AuthManager>(
-    () => AuthManager(logger: AppLogger()),
+    () => AuthManager(debugService: parent.debugService),
   );
 
   @override
@@ -27,7 +27,7 @@ class AuthScopeContainer extends ChildScopeContainer<RootScope>
 class AuthScopeHolder
     extends BaseChildScopeHolder<AuthScope, AuthScopeContainer, RootScope> {
   AuthScopeHolder(super.parent)
-    : super(scopeObservers: [ScopeObserverImpl(logger: AppLogger())]);
+    : super(scopeObservers: [ScopeObserverImpl(logger: parent.debugService)]);
   @override
   AuthScopeContainer createContainer(RootScope parent) =>
       AuthScopeContainer(parent: parent);

@@ -1,20 +1,20 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:quiz/core/_core.dart';
+import 'package:quiz/features/debug/domain/i_debug_service.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'settings_cubit.freezed.dart';
 part 'settings_state.dart';
 
 class SettingsCubit extends Cubit<SettingsState> {
-  SettingsCubit({required AppLogger logger})
-    : _logger = logger,
+  SettingsCubit({required IDebugService debugService})
+    : _debugService = debugService,
       super(SettingsState());
 
   late final SharedPreferences _preferences;
 
-  final AppLogger _logger;
+  final IDebugService _debugService;
 
   Future<void> init() async {
     // _logger.info('SETTINGS INIT');
@@ -48,7 +48,7 @@ class SettingsCubit extends Cubit<SettingsState> {
 
     await Future.delayed(Duration(seconds: 3));
 
-    emit(state.copyWith(isWork: true));
+    // emit(state.copyWith(isWork: true));
 
     // _logger.info('SETTINGS FROM SERVER READY');
   }

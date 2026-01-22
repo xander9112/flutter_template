@@ -1,10 +1,10 @@
-import 'package:quiz/core/_core.dart';
+import 'package:quiz/features/debug/_debug.dart';
 import 'package:yx_scope/yx_scope.dart';
 
 class ScopeObserverImpl implements ScopeObserver {
-  ScopeObserverImpl({required AppLogger logger}) : _logger = logger;
+  ScopeObserverImpl({required IDebugService logger}) : _logger = logger;
 
-  final AppLogger _logger;
+  final IDebugService _logger;
 
   @override
   void onScopeDisposeDepFailed(
@@ -13,12 +13,12 @@ class ScopeObserverImpl implements ScopeObserver {
     Object exception,
     StackTrace stackTrace,
   ) {
-    _logger.info('onScopeDisposeDepFailed: ScopeId $scope, DepId $dep');
+    _logger.logDebug('onScopeDisposeDepFailed: ScopeId $scope, DepId $dep');
   }
 
   @override
   void onScopeDisposed(ScopeId scope) {
-    _logger.info('onScopeDisposed: ScopeId $scope');
+    _logger.logDebug('onScopeDisposed: ScopeId $scope');
   }
 
   @override
@@ -27,21 +27,23 @@ class ScopeObserverImpl implements ScopeObserver {
     Object exception,
     StackTrace stackTrace,
   ) {
-    _logger.info('onScopeInitializeFailed: ScopeId $scope, Object $exception');
+    _logger.logDebug(
+      'onScopeInitializeFailed: ScopeId $scope, Object $exception',
+    );
   }
 
   @override
   void onScopeInitialized(ScopeId scope) {
-    _logger.info('onScopeInitialized: ScopeId $scope');
+    _logger.logDebug('onScopeInitialized: ScopeId $scope');
   }
 
   @override
   void onScopeStartDispose(ScopeId scope) {
-    _logger.info('onScopeStartDispose: ScopeId $scope');
+    _logger.logDebug('onScopeStartDispose: ScopeId $scope');
   }
 
   @override
   void onScopeStartInitialize(ScopeId scope) {
-    _logger.info('onScopeStartInitialize: ScopeId $scope');
+    _logger.logDebug('onScopeStartInitialize: ScopeId $scope');
   }
 }

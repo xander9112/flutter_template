@@ -18,7 +18,7 @@ class SettingsScopeContainer extends ChildScopeContainer<RootScope>
   ];
 
   late final AsyncDep<SettingsCubit> _settingsDep = rawAsyncDep<SettingsCubit>(
-    () => SettingsCubit(logger: AppLogger()),
+    () => SettingsCubit(debugService: parent.debugService),
     init: (dep) => dep.init(),
     dispose: (dep) => dep.close(),
   );
@@ -31,7 +31,7 @@ class SettingsScopeHolder
     extends
         BaseChildScopeHolder<SettingsScope, SettingsScopeContainer, RootScope> {
   SettingsScopeHolder(super.parent)
-    : super(scopeObservers: [ScopeObserverImpl(logger: AppLogger())]);
+    : super(scopeObservers: [ScopeObserverImpl(logger: parent.debugService)]);
   @override
   SettingsScopeContainer createContainer(RootScope parent) =>
       SettingsScopeContainer(parent: parent);

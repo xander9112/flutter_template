@@ -58,7 +58,7 @@ class AppScopeHolder
     super.parent, {
     required this.authScope,
     required this.settingsScope,
-  }) : super(scopeObservers: [ScopeObserverImpl(logger: AppLogger())]);
+  }) : super(scopeObservers: [ScopeObserverImpl(logger: parent.debugService)]);
 
   final AuthScope authScope;
   final SettingsScope settingsScope;
