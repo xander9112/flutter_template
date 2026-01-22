@@ -1,4 +1,4 @@
-import 'package:quiz/features/debug/domain/i_debug_service.dart';
+import 'package:quiz/features/debug/i_debug_service.dart';
 
 /// {@template TimerRunner}
 /// Класс для подсчета времени запуска приложения

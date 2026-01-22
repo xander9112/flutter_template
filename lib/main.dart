@@ -1,5 +1,3 @@
-import 'package:quiz/runner/app_runner.dart';
+import 'package:quiz/targets/prod.dart' as prod;
 
-void main(List<String> arguments) {
-  AppRunner(.prod).run(arguments);
-}
+void main(List<String> arguments) => prod.main(arguments);

@@ -1,14 +1,8 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:quiz/features/_features.dart';
-import 'package:quiz/navigation/transitions/_transitions.dart';
 import 'package:quiz/router/app_auto_router.gr.dart';
 
 @AutoRouterConfig(replaceInRouteName: 'Flow|Page|Screen,Route')
 class AppAutoRouter extends RootStackRouter {
-  final AuthManager _manager;
-
-  AppAutoRouter({required AuthManager manager}) : _manager = manager;
-
   @override
   RouteType get defaultRouteType => RouteType.adaptive();
 
@@ -16,31 +10,31 @@ class AppAutoRouter extends RootStackRouter {
   List<AutoRoute> get routes => [
     CustomRoute(
       path: '/',
-      page: TabsWrapperRoute.page,
+      page: RootRoute.page,
       transitionsBuilder: TransitionsBuilders.noTransition,
       initial: true,
-      guards: [AuthGuard(_manager)],
+      // guards: [AuthGuard(_manager)],
       children: [
         CustomRoute(
           path: 'home',
           transitionsBuilder: TransitionsBuilders.noTransition,
-          page: HomeRoute.page,
+          page: MainRoute.page,
           initial: true,
         ),
         CustomRoute(
           path: 'profile',
-          page: ProfileRootRoute.page,
+          page: ProfileRoute.page,
           transitionsBuilder: TransitionsBuilders.noTransition,
-          children: [
-            CustomRoute(
-              path: '',
-              transitionsBuilder: TransitionsBuilders.noTransition,
-              page: ProfileRoute.page,
-              initial: true,
-            ),
-            _profileRoutes,
-            ..._settingsRoutes,
-          ],
+          // children: [
+          //   CustomRoute(
+          //     path: '',
+          //     transitionsBuilder: TransitionsBuilders.noTransition,
+          //     page: ProfileRoute.page,
+          //     initial: true,
+          //   ),
+          //   _profileRoutes,
+          //   ..._settingsRoutes,
+          // ],
         ),
       ],
     ),
@@ -49,72 +43,85 @@ class AppAutoRouter extends RootStackRouter {
     RedirectRoute(path: '/auth', redirectTo: '/'),
     RedirectRoute(path: '/auth/*', redirectTo: '/'),
 
-    CustomRoute(
-      transitionsBuilder: TransitionsBuilders.noTransition,
-      path: '/auth',
-      page: AuthRoute.page,
-      children: [
-        CustomRoute(
-          transitionsBuilder: TransitionsBuilders.noTransition,
-          path: 'login',
-          page: SignInRoute.page,
-        ),
-        CustomRoute(
-          transitionsBuilder: TransitionsBuilders.noTransition,
-          path: 'register',
-          page: SignUpRoute.page,
-        ),
-        CustomRoute(
-          transitionsBuilder: TransitionsBuilders.noTransition,
-          path: 'onboarding',
-          page: OnboardingRoute.page,
-        ),
-        CustomRoute(
-          transitionsBuilder: TransitionsBuilders.noTransition,
-          path: 'pin',
-          page: VerifyRoute.page,
-        ),
-      ],
-    ),
+    // CustomRoute(
+    //   transitionsBuilder: TransitionsBuilders.noTransition,
+    //   path: '/auth',
+    //   page: AuthRoute.page,
+    //   children: [
+    //     CustomRoute(
+    //       transitionsBuilder: TransitionsBuilders.noTransition,
+    //       path: 'login',
+    //       page: SignInRoute.page,
+    //     ),
+    //     CustomRoute(
+    //       transitionsBuilder: TransitionsBuilders.noTransition,
+    //       path: 'register',
+    //       page: SignUpRoute.page,
+    //     ),
+    //     CustomRoute(
+    //       transitionsBuilder: TransitionsBuilders.noTransition,
+    //       path: 'onboarding',
+    //       page: OnboardingRoute.page,
+    //     ),
+    //     CustomRoute(
+    //       transitionsBuilder: TransitionsBuilders.noTransition,
+    //       path: 'pin',
+    //       page: VerifyRoute.page,
+    //     ),
+    //   ],
+    // ),
 
     /// NO ACCESS
-    CustomRoute(
-      page: NoAccessRoute.page,
-      path: '/no-access',
-      transitionsBuilder: TransitionsBuilders.noTransition,
-    ),
+    // CustomRoute(
+    //   page: NoAccessRoute.page,
+    //   path: '/no-access',
+    //   transitionsBuilder: TransitionsBuilders.noTransition,
+    // ),
+    AutoRoute(path: '/debug', page: DebugRoute.page),
+
+    AutoRoute(path: '/debug/tokens', page: TokensRoute.page),
+
+    AutoRoute(path: '/debug/ui-kit', page: UiKitRoute.page),
+
+    AutoRoute(path: '/debug/icons', page: IconsRoute.page),
+
+    AutoRoute(path: '/debug/theme', page: ThemeRoute.page),
+
+    AutoRoute(path: '/debug/lang', page: LangRoute.page),
+
+    AutoRoute(path: '/debug/components', page: ComponentsRoute.page),
 
     RedirectRoute(path: '*', redirectTo: '/'),
   ];
 }
 
-final _profileRoutes = CustomRoute(
-  page: ProfileDataRootRoute.page,
-  path: '',
-  customRouteBuilder: modalBottomSheetBuilder,
-  meta: {'showBottomNavBar': false},
-  children: [
-    CustomRoute(
-      path: 'data',
-      page: ProfileDataRoute.page,
-      initial: true,
-      meta: {'showBottomNavBar': false},
-      transitionsBuilder: TransitionsBuilders.slideBottom,
-    ),
-    CustomRoute(
-      path: 'info',
-      page: ProfileInfoRoute.page,
-      duration: Duration(milliseconds: 150),
-      meta: {'showBottomNavBar': false},
-      transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
-    ),
-  ],
-);
+// final _profileRoutes = CustomRoute(
+//   page: ProfileDataRootRoute.page,
+//   path: '',
+//   customRouteBuilder: modalBottomSheetBuilder,
+//   meta: {'showBottomNavBar': false},
+//   children: [
+//     CustomRoute(
+//       path: 'data',
+//       page: ProfileDataRoute.page,
+//       initial: true,
+//       meta: {'showBottomNavBar': false},
+//       transitionsBuilder: TransitionsBuilders.slideBottom,
+//     ),
+//     CustomRoute(
+//       path: 'info',
+//       page: ProfileInfoRoute.page,
+//       duration: Duration(milliseconds: 150),
+//       meta: {'showBottomNavBar': false},
+//       transitionsBuilder: TransitionsBuilders.slideLeftWithFade,
+//     ),
+//   ],
+// );
 
-final _settingsRoutes = [
-  AutoRoute(
-    path: 'settings',
-    page: SettingsRoute.page,
-    meta: {'showBottomNavBar': false},
-  ),
-];
+// final _settingsRoutes = [
+//   AutoRoute(
+//     path: 'settings',
+//     page: SettingsRoute.page,
+//     meta: {'showBottomNavBar': false},
+//   ),
+// ];

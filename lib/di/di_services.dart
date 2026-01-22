@@ -1,7 +1,7 @@
 import 'package:app_services/app_services.dart';
 import 'package:i_app_services/i_app_services.dart';
-import 'package:quiz/app/root_scope.dart';
-import 'package:quiz/features/debug/_debug.dart';
+import 'package:quiz/di/di_container.dart';
+import 'package:quiz/di/di_typedefs.dart';
 
 /// {@template di_services}
 /// Класс для инициализации и управления сервисами приложения.
@@ -14,9 +14,7 @@ import 'package:quiz/features/debug/_debug.dart';
 /// {@endtemplate}
 final class DiServices {
   /// {@macro di_services}
-  DiServices(this.debugService);
-
-  final IDebugService debugService;
+  DiServices();
 
   /// Сервис для работы с путями файловой системы
   late final IPathProvider pathProvider;
@@ -29,46 +27,46 @@ final class DiServices {
 
   /// Метод для инициализации сервисов в приложении.
   ///
+  /// Принимает:
+  /// - [onProgress] - обратный вызов для уведомления о прогрессе инициализации
+  /// - [diContainer] - контейнер зависимостей с конфигурацией приложения
+  /// - [onError] - обратный вызов для обработки ошибок инициализации
+  ///
   /// Последовательность инициализации:
   /// 1. Инициализация сервиса путей (AppPathProvider)
   /// 2. Инициализация защищенного хранилища (AppSecureStorage)
-  Future<void> init({required RootScope diContainer}) async {
+  void init({
+    required OnProgress onProgress,
+    required OnError onError,
+    required DiContainer diContainer,
+  }) {
     try {
+      // throw Exception('Тестовая - ошибка инициализации сервиса путей');
       pathProvider = const AppPathProvider();
-
-      debugService.log(AppPathProvider.name);
+      onProgress(AppPathProvider.name);
     } on Object catch (error, stackTrace) {
-      debugService.logError(
-        'Ошибка инициализации ${IPathProvider.name}',
-        error: error,
-        stackTrace: stackTrace,
-      );
+      onError('Ошибка инициализации ${IPathProvider.name}', error, stackTrace);
     }
     try {
       secureStorage = AppSecureStorage(
         secretKey: diContainer.appConfig.secretKey,
       );
-
-      debugService.log(AppSecureStorage.name);
+      onProgress(AppSecureStorage.name);
     } on Object catch (error, stackTrace) {
-      debugService.logError(
-        'Ошибка инициализации ${ISecureStorage.name}',
-        error: error,
-        stackTrace: stackTrace,
-      );
+      onError('Ошибка инициализации ${ISecureStorage.name}', error, stackTrace);
     }
 
     try {
       locationService = const AppLocationService();
-      debugService.log(AppLocationService.name);
+      onProgress(AppLocationService.name);
     } on Object catch (error, stackTrace) {
-      debugService.logError(
+      onError(
         'Ошибка инициализации ${ILocationService.name}',
-        error: error,
-        stackTrace: stackTrace,
+        error,
+        stackTrace,
       );
     }
 
-    debugService.log('Инициализация сервисов завершена!');
+    onProgress('Инициализация сервисов завершена!');
   }
 }

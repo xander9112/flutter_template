@@ -1,25 +1,23 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "quiz",
+            "name": "dev",
+            "type": "dart",
             "request": "launch",
-            "type": "dart"
+            "program": "${workspaceFolder}/lib/targets/dev.dart"
         },
         {
-            "name": "quiz (profile mode)",
-            "request": "launch",
+            "name": "stage",
             "type": "dart",
-            "flutterMode": "profile"
+            "request": "launch",
+            "program": "${workspaceFolder}/lib/targets/stage.dart"
         },
         {
-            "name": "quiz (release mode)",
-            "request": "launch",
+            "name": "prod",
             "type": "dart",
-            "flutterMode": "release"
-        }
+            "request": "launch",
+            "program": "${workspaceFolder}/lib/targets/prod.dart"
+        },
     ]
 }

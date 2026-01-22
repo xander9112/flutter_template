@@ -33,42 +33,42 @@ class DebugPage extends StatelessWidget {
             // const SizedBox(height: 16),
             // ElevatedButton(
             //   onPressed: () {
-            //     unawaited(context.pushNamed(DebugRoutes.iconsScreenName));
+            //     unawaited(context.router.pushPath(DebugRoutes.iconsScreenName));
             //   },
             //   child: const Text('Экран с иконками'),
             // ),
             // const SizedBox(height: 16),
             // ElevatedButton(
             //   onPressed: () {
-            //     unawaited(context.pushNamed(DebugRoutes.themeScreenName));
+            //     unawaited(context.router.pushPath(DebugRoutes.themeScreenName));
             //   },
             //   child: const Text('Экран настроек темы'),
             // ),
             // const SizedBox(height: 16),
             // ElevatedButton(
             //   onPressed: () {
-            //     unawaited(context.pushNamed(DebugRoutes.tokensScreenName));
+            //     unawaited(context.router.pushPath(DebugRoutes.tokensScreenName));
             //   },
             //   child: const Text('Экран с токенами'),
             // ),
             // const SizedBox(height: 16),
             // ElevatedButton(
             //   onPressed: () {
-            //     unawaited(context.pushNamed(DebugRoutes.uiKitScreenName));
+            //     unawaited(context.router.pushPath(DebugRoutes.uiKitScreenName));
             //   },
             //   child: const Text('Экран UI Kit'),
             // ),
             // const SizedBox(height: 16),
             // ElevatedButton(
             //   onPressed: () {
-            //     unawaited(context.pushNamed(DebugRoutes.langScreenName));
+            //     unawaited(context.router.pushPath(DebugRoutes.langScreenName));
             //   },
             //   child: const Text('Экран локализации'),
             // ),
             // const SizedBox(height: 16),
             // ElevatedButton(
             //   onPressed: () async {
-            //     await context.pushNamed(DebugRoutes.componentsScreenName);
+            //     await context.router.pushPath(DebugRoutes.componentsScreenName);
             //   },
             //   child: const Text('Экран компонентов'),
             // ),

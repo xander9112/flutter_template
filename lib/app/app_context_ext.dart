@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/app/root_scope.dart';
-import 'package:yx_scope_flutter/yx_scope_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz/app/theme/theme_notifier.dart';
+import 'package:quiz/di/di_container.dart';
+import 'package:quiz/l10n/gen/app_localizations.dart';
+import 'package:quiz/l10n/localization_notifier.dart';
 
 /// Класс, реализующий расширение для контекста приложения
 extension AppContextExt on BuildContext {
   /// Метод для получения экземпляра DIContainer
-  RootScope get rootScope => ScopeProvider.of<RootScope>(this)!;
+  DiContainer get di => read<DiContainer>();
 
-  // /// Геттер для получения темы
-  // ThemeNotifier get theme => read<ThemeNotifier>();
+  /// Геттер для получения темы
+  ThemeNotifier get theme => read<ThemeNotifier>();
 
-  // /// Геттер для получения локализации
-  // AppLocalizations get l10n => AppLocalizations.of(this)!;
+  /// Геттер для получения локализации
+  AppLocalizations get l10n => AppLocalizations.of(this)!;
 
-  // /// Геттер для получения управления локализацией
-  // LocalizationNotifier get localization => read<LocalizationNotifier>();
+  /// Геттер для получения управления локализацией
+  LocalizationNotifier get localization => read<LocalizationNotifier>();
 }
