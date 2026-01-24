@@ -1,9 +1,8 @@
-import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/app/ui_kit/app_box.dart';
-import 'package:quiz/features/main/presentation/main_routes.dart';
+import 'package:quiz/features/settings/presentation/states/settings/settings_cubit.dart';
 
 /// {@template MainScreen}
 /// Главный экран приложения
@@ -26,11 +25,18 @@ class MainScreen extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Переход на экран с деталями
-                unawaited(
-                  context.router.pushPath(MainRoutes.mainDetailScreenName),
-                );
+
+                if (context.read<SettingsCubit>().state.themeMode ==
+                    ThemeMode.dark) {
+                  context.read<SettingsCubit>().changeTheme(ThemeMode.light);
+                } else if (context.read<SettingsCubit>().state.themeMode ==
+                    ThemeMode.light) {
+                  context.read<SettingsCubit>().changeTheme(ThemeMode.dark);
+                } else {
+                  context.read<SettingsCubit>().changeTheme(ThemeMode.dark);
+                }
               },
-              child: const Text('Переход на экран с деталями'),
+              child: const Text('Перейти на темную сторону'),
             ),
           ],
         ),

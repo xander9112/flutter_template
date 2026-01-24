@@ -2,6 +2,7 @@ import 'package:quiz/app/app_config/app_config.dart';
 import 'package:quiz/app/app_env.dart';
 import 'package:quiz/app/http/app_http_client.dart';
 import 'package:quiz/di/di_repositories.dart';
+import 'package:quiz/di/di_scopes.dart';
 import 'package:quiz/di/di_services.dart';
 import 'package:quiz/di/di_typedefs.dart';
 import 'package:quiz/features/debug/i_debug_service.dart';
@@ -32,6 +33,9 @@ final class DiContainer {
   /// Сервисы приложения
   late final DiServices services;
 
+  /// Скоупы
+  late final DiScopes scopes;
+
   /// Метод для инициализации зависимостей
   Future<void> init({
     required OnProgress onProgress,
@@ -58,6 +62,14 @@ final class DiContainer {
     // Инициализация репозиториев
     repositories = DiRepositories()
       ..init(onProgress: onProgress, onError: onError, diContainer: this);
+
+    scopes = DiScopes();
+
+    await scopes.init(
+      onProgress: onProgress,
+      onError: onError,
+      diContainer: this,
+    );
 
     onComplete('Инициализация зависимостей завершена!');
   }

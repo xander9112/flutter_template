@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz/app/theme/theme_notifier.dart';
 import 'package:quiz/di/di_container.dart';
+import 'package:quiz/features/auth/_auth.dart';
+import 'package:quiz/features/settings/_settings.dart';
 import 'package:quiz/features/update/domain/state/cubit/update_cubit.dart';
 import 'package:quiz/l10n/localization_notifier.dart';
+import 'package:yx_scope_flutter/yx_scope_flutter.dart';
 
 /// {@template app_providers}
 /// Класс для добавления зависимостей приложения
@@ -38,7 +41,20 @@ final class AppProviders extends StatelessWidget {
           create: (_) => UpdateCubit(diContainer.repositories.updateRepository),
         ),
       ],
-      child: child,
+      child: ScopeProvider<SettingsScope>(
+        holder: diContainer.scopes.settingsScopeHolder,
+        child: ScopeProvider<AuthScope>(
+          holder: diContainer.scopes.authScopeHolder,
+          child: ScopeBuilder<SettingsScope>.withPlaceholder(
+            builder: (context, scope) {
+              return BlocProvider<SettingsCubit>(
+                create: (context) => scope.settingsCubit,
+                child: child,
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }
