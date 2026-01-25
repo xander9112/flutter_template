@@ -13,6 +13,7 @@ import 'package:quiz/features/debug/i_debug_service.dart';
 import 'package:quiz/features/error/error_screen.dart';
 import 'package:quiz/router/app_router.dart';
 import 'package:quiz/runner/timer_runner.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 part 'errors_handlers.dart';
 
@@ -91,6 +92,9 @@ class AppRunner {
   Future<void> _initApp() async {
     // Запрет на поворот экрана
     await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+    // Задает стратегию URL-адресации вашего веб-приложения, используя пути вместо префикса в начале URL.
+    setPathUrlStrategy();
 
     // Заморозка первого кадра (сплеш)
     WidgetsBinding.instance.deferFirstFrame();

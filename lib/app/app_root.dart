@@ -9,7 +9,6 @@ import 'package:quiz/di/di_container.dart';
 import 'package:quiz/features/settings/_settings.dart';
 import 'package:quiz/l10n/gen/app_localizations.dart';
 import 'package:quiz/l10n/localization_notifier.dart';
-import 'package:quiz/router/observer.dart';
 
 /// {@template app}
 /// Главный виджет приложения, отображающий основной интерфейс приложения
@@ -50,7 +49,8 @@ class AppRoot extends StatelessWidget {
                         AppLocalizations.localizationsDelegates,
                     supportedLocales: AppLocalizations.supportedLocales,
                     routerConfig: router.config(
-                      navigatorObservers: () => [MyObserver()],
+                      includePrefixMatches: true,
+                      navigatorObservers: () => [diContainer.routerObserver],
                     ),
                   );
                 },

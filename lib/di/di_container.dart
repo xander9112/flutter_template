@@ -6,6 +6,7 @@ import 'package:quiz/di/di_scopes.dart';
 import 'package:quiz/di/di_services.dart';
 import 'package:quiz/di/di_typedefs.dart';
 import 'package:quiz/features/debug/i_debug_service.dart';
+import 'package:quiz/router/observer.dart';
 
 /// {@template dependencies_container}
 /// Контейнер для зависимостей
@@ -36,6 +37,8 @@ final class DiContainer {
   /// Скоупы
   late final DiScopes scopes;
 
+  late final RouterObserver routerObserver;
+
   /// Метод для инициализации зависимостей
   Future<void> init({
     required OnProgress onProgress,
@@ -54,6 +57,8 @@ final class DiContainer {
       debugService: debugService,
       appConfig: appConfig,
     );
+
+    routerObserver = RouterObserver(debugService: debugService);
 
     // Инициализация сервисов
     services = DiServices()
