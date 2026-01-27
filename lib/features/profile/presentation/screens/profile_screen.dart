@@ -2,7 +2,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:quiz/app/app_context_ext.dart';
+import 'package:quiz/features/auth/di/auth_scope.dart';
 import 'package:quiz/features/profile/domain/bloc/profile_bloc.dart';
+import 'package:quiz/router/app_auto_router.gr.dart';
+import 'package:yx_scope_flutter/yx_scope_flutter.dart';
 
 /// {@template profile_screen}
 /// Экран профиля пользователя.
@@ -45,17 +48,39 @@ class _ProfileScreenView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
-      body: Center(
-        child: BlocBuilder<ProfileBloc, ProfileState>(
-          builder: (context, state) {
-            return switch (state) {
-              ProfileSuccessState() => Text('Data: ${state.props.first}'),
-              ProfileErrorState() => Text('Error: ${state.message}'),
-              _ => const CircularProgressIndicator(),
-            };
-          },
-        ),
+      appBar: AppBar(
+        title: Text('Profile page'),
+        actions: [
+          IconButton(
+            onPressed: () => context.router.push(SettingsRoute()),
+            icon: Icon(Icons.settings),
+          ),
+        ],
+      ),
+      body: ScopeBuilder<AuthScope>.withPlaceholder(
+        builder: (context, scope) {
+          return StreamBuilder(
+            initialData: scope.authManager.stage,
+            stream: scope.authManager.stage,
+            builder: (context, snapshot) {
+              if (scope.authManager.isSignIn) {
+                return Center(
+                  child: ElevatedButton(
+                    onPressed: scope.authManager.signOut,
+                    child: Text('SignOut'),
+                  ),
+                );
+              }
+
+              return Center(
+                child: ElevatedButton(
+                  onPressed: scope.authManager.signIn,
+                  child: Text('SignIn'),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
