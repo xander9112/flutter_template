@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:quiz/app/app.dart';
 import 'package:quiz/app/app_context_ext.dart';
 import 'package:quiz/app/app_providers.dart';
 import 'package:quiz/app/theme/app_theme.dart';
@@ -54,6 +55,10 @@ class AppRoot extends StatelessWidget {
                           diContainer.scopes.authScopeHolder.scope!.authManager,
                       navigatorObservers: () => [diContainer.routerObserver],
                     ),
+
+                    builder: (context, child) {
+                      return AppPage(child: child ?? SizedBox.shrink());
+                    },
                   );
                 },
               ),

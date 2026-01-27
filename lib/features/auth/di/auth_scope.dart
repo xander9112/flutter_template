@@ -17,11 +17,11 @@ class AuthScopeContainer extends ScopeContainer implements AuthScope {
   @override
   List<Set<AsyncDep<dynamic>>> get initializeQueue => [
     {
-      rawAsyncDep(
-        () => authManager,
-        init: (dep) => dep.init(),
-        dispose: Future.value,
-      ),
+      // rawAsyncDep(
+      //   () => authManager,
+      //   init: (dep) => dep.init(),
+      //   dispose: Future.value,
+      // ),
     },
   ];
 
