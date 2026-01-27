@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:quiz/features/auth/_auth.dart';
 import 'package:quiz/features/debug/i_debug_service.dart';
 import 'package:quiz/router/app_auto_router.dart';
 
@@ -18,26 +19,10 @@ class AppRouter {
   static String get initialLocation => '/main';
 
   /// Метод для создания экземпляра GoRouter
-  static RootStackRouter createRouter(IDebugService debugService) {
-    return AppAutoRouter();
-
-    // GoRouter(
-    //   navigatorKey: rootNavigatorKey,
-    //   initialLocation: initialLocation,
-    //   observers: [debugService.routeObserver],
-    //   routes: [
-    //     StatefulShellRoute.indexedStack(
-    //       parentNavigatorKey: rootNavigatorKey,
-    //       builder: (context, state, navigationShell) =>
-    //           RootScreen(navigationShell: navigationShell),
-    //       branches: [
-    //         MainRoutes.buildShellBranch(),
-    //         ProfileRoutes.buildShellBranch(),
-    //       ],
-    //     ),
-    //     DebugRoutes.buildRoutes(),
-    //     UpdateRoutes.buildRoutes(),
-    //   ],
-    // );
+  static RootStackRouter createRouter(
+    IDebugService debugService,
+    AuthManager authManager,
+  ) {
+    return AppAutoRouter(authManager: authManager);
   }
 }

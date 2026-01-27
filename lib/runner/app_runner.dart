@@ -17,6 +17,8 @@ import 'package:url_strategy/url_strategy.dart';
 
 part 'errors_handlers.dart';
 
+final appRootGlobalKey = GlobalKey();
+
 /// Класс, реализующий раннер для конфигурирования приложения при запуске
 ///
 /// Порядок инициализации:
@@ -59,12 +61,16 @@ class AppRunner {
       await _initApp();
 
       // Инициализация роутера
-      router = AppRouter.createRouter(_debugService);
 
       final diContainer = await _initDependencies(
         debugService: _debugService,
         env: env,
         timerRunner: _timerRunner,
+      );
+
+      router = AppRouter.createRouter(
+        _debugService,
+        diContainer.scopes.authScopeHolder.scope!.authManager,
       );
       // Инициализация метода обработки ошибок
       _initErrorHandlers(_debugService);

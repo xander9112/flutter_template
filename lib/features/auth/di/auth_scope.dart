@@ -15,7 +15,15 @@ class AuthScopeContainer extends ScopeContainer implements AuthScope {
   final IDebugService _debugService;
 
   @override
-  List<Set<AsyncDep<dynamic>>> get initializeQueue => [{}];
+  List<Set<AsyncDep<dynamic>>> get initializeQueue => [
+    {
+      rawAsyncDep(
+        () => authManager,
+        init: (dep) => dep.init(),
+        dispose: Future.value,
+      ),
+    },
+  ];
 
   // late final Dep<AuthRepository> _authRepositoryDep = dep<AuthRepository>(() => AuthRepositoryImpl(dataSource: RemoteAuthDataSource(pa)))
 

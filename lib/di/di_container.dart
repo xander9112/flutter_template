@@ -37,7 +37,8 @@ final class DiContainer {
   /// Скоупы
   late final DiScopes scopes;
 
-  late final RouterObserver routerObserver;
+  RouterObserver get routerObserver =>
+      RouterObserver(debugService: debugService);
 
   /// Метод для инициализации зависимостей
   Future<void> init({
@@ -57,8 +58,6 @@ final class DiContainer {
       debugService: debugService,
       appConfig: appConfig,
     );
-
-    routerObserver = RouterObserver(debugService: debugService);
 
     // Инициализация сервисов
     services = DiServices()

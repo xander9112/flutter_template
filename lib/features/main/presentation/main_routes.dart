@@ -1,3 +1,6 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:quiz/router/app_auto_router.gr.dart';
+
 abstract final class MainRoutes {
   /// Название роута главной страницы
   static const String mainScreenName = 'main_screen';
@@ -15,27 +18,16 @@ abstract final class MainRoutes {
   ///
   /// Принимает:
   /// - [routes] - вложенные роуты
-  // static StatefulShellBranch buildShellBranch({
-  //   List<RouteBase> routes = const [],
-  //   List<NavigatorObserver>? observers,
-  // }) => StatefulShellBranch(
-  //   initialLocation: _mainScreenPath,
-  //   observers: observers,
-  //   routes: [
-  //     ...routes,
-  //     GoRoute(
-  //       path: _mainScreenPath,
-  //       name: mainScreenName,
-  //       builder: (context, state) => const MainScreen(),
-  //       routes: [
-  //         // Пример вложенного роута для главного экрана
-  //         GoRoute(
-  //           path: _mainDetailScreenPath,
-  //           name: mainDetailScreenName,
-  //           builder: (context, state) => const MainDetailScreen(),
-  //         ),
-  //       ],
-  //     ),
-  //   ],
-  // );
+  static final routes = [
+    CustomRoute(
+      transitionsBuilder: TransitionsBuilders.noTransition,
+      path: '',
+      page: MainRoute.page,
+      children: [
+        AutoRoute(path: 'home', initial: true, page: HomeRoute.page),
+
+        AutoRoute(path: 'profile', page: ProfileRoute.page),
+      ],
+    ),
+  ];
 }

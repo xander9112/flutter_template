@@ -41,10 +41,10 @@ final class AppProviders extends StatelessWidget {
           create: (_) => UpdateCubit(diContainer.repositories.updateRepository),
         ),
       ],
-      child: ScopeProvider<SettingsScope>(
-        holder: diContainer.scopes.settingsScopeHolder,
-        child: ScopeProvider<AuthScope>(
-          holder: diContainer.scopes.authScopeHolder,
+      child: ScopeProvider<AuthScope>(
+        holder: diContainer.scopes.authScopeHolder,
+        child: ScopeProvider<SettingsScope>(
+          holder: diContainer.scopes.settingsScopeHolder,
           child: ScopeBuilder<SettingsScope>.withPlaceholder(
             builder: (context, scope) {
               return BlocProvider<SettingsCubit>(

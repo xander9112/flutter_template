@@ -50,6 +50,8 @@ class AppRoot extends StatelessWidget {
                     supportedLocales: AppLocalizations.supportedLocales,
                     routerConfig: router.config(
                       includePrefixMatches: true,
+                      reevaluateListenable:
+                          diContainer.scopes.authScopeHolder.scope!.authManager,
                       navigatorObservers: () => [diContainer.routerObserver],
                     ),
                   );
