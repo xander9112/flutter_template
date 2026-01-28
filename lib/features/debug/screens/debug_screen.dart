@@ -16,7 +16,14 @@ class DebugScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Debug Screen')),
+      appBar: AppBar(
+        title: const Text('Debug Screen'),
+        leading: BackButton(
+          onPressed: () {
+            context.router.maybePopTop();
+          },
+        ),
+      ),
       body: Center(
         child: ListView(
           padding: const EdgeInsets.all(16),

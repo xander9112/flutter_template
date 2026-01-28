@@ -50,10 +50,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  generate: true
-  assets:
-    - assets/icons/
-    - assets/lottie/
 
 flutter_gen:
   integrations:

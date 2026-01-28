@@ -61,27 +61,29 @@ class AuthManager extends ChangeNotifier {
   }
 
   Future<void> init() async {
-    // _logger.info('AUTH INIT');
-
     _prefs = await SharedPreferences.getInstance();
+
+    await _prefs.remove(_kOnboardingDone);
 
     await Future.delayed(Duration(seconds: 2));
 
+    _checkStatus();
+  }
+
+  Future<void> _checkStatus() async {
     final hasSession = _prefs.getBool(_kHasSession) ?? false;
     final onboardingDone = _prefs.getBool(_kOnboardingDone) ?? false;
     final hasPin = isMustVerify ? _prefs.getBool(_kHasPin) ?? true : false;
 
-    if (!onboardingDone) {
-      _stage.add(AuthStage.onboarding);
-    } else if (!hasSession) {
+    if (!hasSession) {
       _stage.add(AuthStage.unauthenticated);
     } else if (hasPin) {
       _stage.add(AuthStage.locked);
+    } else if (!onboardingDone) {
+      _stage.add(AuthStage.onboarding);
     } else {
       _stage.add(AuthStage.authenticated);
     }
-
-    // _logger.info('AUTH READY');
 
     notifyListeners();
   }
@@ -90,8 +92,7 @@ class AuthManager extends ChangeNotifier {
 
   Future<void> completeOnboarding() async {
     await _prefs.setBool(_kOnboardingDone, true);
-    _stage.add(AuthStage.unauthenticated);
-    notifyListeners();
+    _checkStatus();
   }
 
   Future<void> signIn() async {
@@ -121,7 +122,6 @@ class AuthManager extends ChangeNotifier {
 
   Future<void> signOut() async {
     await _prefs.remove(_kHasSession);
-    _stage.add(AuthStage.unauthenticated);
-    notifyListeners();
+    _checkStatus();
   }
 }

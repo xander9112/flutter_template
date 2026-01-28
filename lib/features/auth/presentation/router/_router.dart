@@ -1,1 +1,2 @@
-export 'guards/_guards.dart';
+export 'guards/auth_guard.dart';
+export 'router.dart';

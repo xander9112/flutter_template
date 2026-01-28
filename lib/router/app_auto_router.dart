@@ -38,6 +38,7 @@ class AppAutoRouter extends RootStackRouter {
       ],
     ),
 
+    AutoRoute(path: '/settings', page: SettingsRoute.page),
     ...authRoutes,
     ...debugRoutes,
 
