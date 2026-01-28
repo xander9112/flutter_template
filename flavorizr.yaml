@@ -1,0 +1,53 @@
+flavors:
+  dev:
+    app:
+      name: "XelaApp (dev)"
+    android:
+      applicationId: "com.example.quiz.dev"
+    ios:
+      bundleId: "com.example.quiz.dev"
+  stage:
+    app:
+      name: "XelaApp (stg)"
+    android:
+      applicationId: "com.example.quiz.stage"
+    ios:
+      bundleId: "com.example.quiz.stage"
+  prod:
+    app:
+      name: "XelaApp"
+    android:
+      applicationId: "com.example.quiz"
+    ios:
+      bundleId: "com.example.quiz"
+
+instructions:
+  [
+    "assets:download",
+    "assets:extract",
+    "android:androidManifest",
+    "android:flavorizrGradle",
+    "android:buildGradle",
+    "android:dummyAssets",
+    "android:icons",
+    "ios:podfile",
+    "ios:xcconfig",
+    "ios:buildTargets",
+    "ios:schema",
+    "ios:dummyAssets",
+    "ios:icons",
+    "ios:plist",
+    "ios:launchScreen",
+    "macos:podfile",
+    "macos:xcconfig",
+    "macos:configs",
+    "macos:buildTargets",
+    "macos:schema",
+    "macos:dummyAssets",
+    "macos:icons",
+    "macos:plist",
+    "google:firebase",
+    "huawei:agconnect",
+    "assets:clean",
+    "ide:config",
+  ]

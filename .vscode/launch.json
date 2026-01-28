@@ -5,19 +5,31 @@
             "name": "dev",
             "type": "dart",
             "request": "launch",
-            "program": "${workspaceFolder}/lib/targets/dev.dart"
+            "program": "${workspaceFolder}/lib/targets/dev.dart",
+            "args": [
+                "--flavor",
+                "dev",
+            ]
         },
         {
             "name": "stage",
             "type": "dart",
             "request": "launch",
-            "program": "${workspaceFolder}/lib/targets/stage.dart"
+            "program": "${workspaceFolder}/lib/targets/stage.dart",
+            "args": [
+                "--flavor",
+                "stage",
+            ]
         },
         {
             "name": "prod",
             "type": "dart",
             "request": "launch",
-            "program": "${workspaceFolder}/lib/targets/prod.dart"
+            "program": "${workspaceFolder}/lib/targets/prod.dart",
+            "args": [
+                "--flavor",
+                "prod",
+            ]
         },
     ]
 }
