@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/app/app_context_ext.dart';
+import 'package:quiz/app/_app.dart';
 import 'package:quiz/app/ui_kit/app_box.dart';
-import 'package:quiz/router/app_auto_router.gr.dart';
 
 /// {@template debug_screen}
 /// Экран для отладки приложения

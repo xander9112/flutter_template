@@ -1,4 +1,4 @@
-import 'package:quiz/di/di_base_repo.dart';
+import 'package:quiz/core/_core.dart';
 import 'package:quiz/features/update/domain/entity/update_entity.dart';
 
 /// {@template IUpdateRepository}

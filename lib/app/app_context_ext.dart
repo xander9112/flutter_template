@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz/app/_app.dart';
 import 'package:quiz/app/theme/theme_notifier.dart';
-import 'package:quiz/di/di_container.dart';
 import 'package:quiz/l10n/gen/app_localizations.dart';
 import 'package:quiz/l10n/localization_notifier.dart';
 

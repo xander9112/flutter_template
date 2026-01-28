@@ -1,7 +1,5 @@
-import 'package:quiz/app/app_env.dart';
-import 'package:quiz/di/di_base_repo.dart';
-import 'package:quiz/di/di_container.dart';
-import 'package:quiz/di/di_typedefs.dart';
+import 'package:quiz/app/_app.dart';
+import 'package:quiz/core/_core.dart';
 import 'package:quiz/features/main/data/repository/main_mock_repository.dart';
 import 'package:quiz/features/main/data/repository/main_repository.dart';
 import 'package:quiz/features/main/domain/repository/i_main_repository.dart';

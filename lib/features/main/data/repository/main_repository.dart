@@ -1,4 +1,4 @@
-import 'package:quiz/app/http/app_http_client.dart';
+import 'package:quiz/core/_core.dart';
 import 'package:quiz/features/main/domain/repository/i_main_repository.dart';
 
 /// {@template MainRepository}

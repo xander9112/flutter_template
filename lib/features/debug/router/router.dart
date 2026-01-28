@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:quiz/router/app_auto_router.gr.dart';
+import 'package:quiz/app/_app.dart';
 
 final debugRoutes = [
   CustomRoute(

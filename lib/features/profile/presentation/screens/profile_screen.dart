@@ -1,10 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz/app/app_context_ext.dart';
+import 'package:quiz/app/_app.dart';
 import 'package:quiz/features/auth/di/auth_scope.dart';
 import 'package:quiz/features/profile/domain/bloc/profile_bloc.dart';
-import 'package:quiz/router/app_auto_router.gr.dart';
 import 'package:yx_scope_flutter/yx_scope_flutter.dart';
 
 /// {@template profile_screen}

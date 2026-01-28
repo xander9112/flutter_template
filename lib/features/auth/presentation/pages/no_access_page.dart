@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/router/app_auto_router.gr.dart';
+import 'package:quiz/app/_app.dart';
 
 @RoutePage()
 class NoAccessPage extends StatelessWidget {

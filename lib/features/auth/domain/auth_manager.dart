@@ -62,7 +62,7 @@ class AuthManager extends ChangeNotifier {
 
   Future<void> init() async {
     _prefs = await SharedPreferences.getInstance();
-
+    _debugService.logDebug('Auth init');
     await _prefs.remove(_kOnboardingDone);
 
     await Future.delayed(Duration(seconds: 2));

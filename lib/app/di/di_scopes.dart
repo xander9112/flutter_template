@@ -1,5 +1,4 @@
-import 'package:quiz/di/di_container.dart';
-import 'package:quiz/di/di_typedefs.dart';
+import 'package:quiz/app/_app.dart';
 import 'package:quiz/features/auth/_auth.dart';
 import 'package:quiz/features/settings/di/settings_scope.dart';
 

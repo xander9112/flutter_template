@@ -1,4 +1,4 @@
-import 'package:quiz/app/http/app_http_client.dart';
+import 'package:quiz/core/_core.dart';
 import 'package:quiz/features/update/domain/entity/update_entity.dart';
 import 'package:quiz/features/update/domain/repository/i_update_repository.dart';
 

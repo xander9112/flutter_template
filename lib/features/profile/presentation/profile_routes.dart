@@ -2,9 +2,6 @@ abstract final class ProfileRoutes {
   /// Название роута главной страницы
   static const String profileScreenName = 'profile_screen';
 
-  /// Путь роута страницы профиля пользователя
-  static const String _profileScreenPath = '/profile';
-
   /// Метод для построения ветки роутов по фиче профиля пользователя
   ///
   /// Принимает:

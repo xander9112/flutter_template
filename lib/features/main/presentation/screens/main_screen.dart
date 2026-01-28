@@ -2,8 +2,7 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:quiz/app/app_context_ext.dart';
-import 'package:quiz/router/app_auto_router.gr.dart';
+import 'package:quiz/app/_app.dart';
 
 /// Главный экран приложения
 @RoutePage()

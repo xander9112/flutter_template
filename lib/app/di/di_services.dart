@@ -1,7 +1,6 @@
 import 'package:app_services/app_services.dart';
 import 'package:i_app_services/i_app_services.dart';
-import 'package:quiz/di/di_container.dart';
-import 'package:quiz/di/di_typedefs.dart';
+import 'package:quiz/app/_app.dart';
 
 /// {@template di_services}
 /// Класс для инициализации и управления сервисами приложения.

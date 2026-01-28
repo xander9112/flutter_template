@@ -4,13 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:quiz/app/app_env.dart';
-import 'package:quiz/app/app_root.dart';
-import 'package:quiz/di/di_container.dart';
+import 'package:quiz/app/_app.dart';
 import 'package:quiz/features/debug/debug_service.dart';
 import 'package:quiz/features/debug/i_debug_service.dart';
 import 'package:quiz/features/error/error_screen.dart';
-import 'package:quiz/router/app_router.dart';
 import 'package:quiz/runner/timer_runner.dart';
 import 'package:url_strategy/url_strategy.dart';
 

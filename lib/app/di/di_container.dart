@@ -1,12 +1,7 @@
-import 'package:quiz/app/app_config/app_config.dart';
-import 'package:quiz/app/app_env.dart';
-import 'package:quiz/app/http/app_http_client.dart';
-import 'package:quiz/di/di_repositories.dart';
-import 'package:quiz/di/di_scopes.dart';
-import 'package:quiz/di/di_services.dart';
-import 'package:quiz/di/di_typedefs.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:quiz/app/_app.dart';
+import 'package:quiz/core/_core.dart';
 import 'package:quiz/features/debug/i_debug_service.dart';
-import 'package:quiz/router/observer.dart';
 
 /// {@template dependencies_container}
 /// Контейнер для зависимостей
@@ -37,7 +32,10 @@ final class DiContainer {
   /// Скоупы
   late final DiScopes scopes;
 
-  RouterObserver get routerObserver =>
+  NavigatorObserversBuilder get navigatorObservers =>
+      () => [_routerObserver];
+
+  RouterObserver get _routerObserver =>
       RouterObserver(debugService: debugService);
 
   /// Метод для инициализации зависимостей

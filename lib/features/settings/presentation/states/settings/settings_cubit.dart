@@ -20,7 +20,7 @@ class SettingsCubit extends Cubit<SettingsState> {
     _preferences = await SharedPreferences.getInstance();
 
     final modeStr = _preferences.getString('theme_mode');
-
+    _debugService.logDebug(modeStr ?? 'unknown theme mode');
     switch (modeStr) {
       case 'light':
         emit(state.copyWith(themeMode: ThemeMode.light));

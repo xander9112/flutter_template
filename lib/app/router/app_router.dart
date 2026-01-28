@@ -1,9 +1,32 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:quiz/features/auth/domain/auth_manager.dart';
-import 'package:quiz/features/auth/presentation/router/guards/auth_guard.dart';
-import 'package:quiz/features/auth/presentation/router/router.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:quiz/app/_app.dart';
+import 'package:quiz/features/auth/_auth.dart';
+import 'package:quiz/features/debug/i_debug_service.dart';
 import 'package:quiz/features/debug/router/router.dart';
-import 'package:quiz/router/app_auto_router.gr.dart';
+
+/// {@template app_router}
+///  AppRouter - класс для управления навигацией в приложении
+///  [createRouter] - метод для создания экземпляра GoRouter
+/// {@endtemplate}
+class AppRouter {
+  /// {@macro app_router}
+  const AppRouter();
+
+  /// Ключ для доступа к корневому навигатору приложения
+  static final rootNavigatorKey = GlobalKey<NavigatorState>();
+
+  /// Начальный роут приложения
+  static String get initialLocation => '/main';
+
+  /// Метод для создания экземпляра GoRouter
+  static RootStackRouter createRouter(
+    IDebugService debugService,
+    AuthManager authManager,
+  ) {
+    return AppAutoRouter(authManager: authManager);
+  }
+}
 
 @AutoRouterConfig(replaceInRouteName: 'Flow|Page|Screen,Route')
 class AppAutoRouter extends RootStackRouter {

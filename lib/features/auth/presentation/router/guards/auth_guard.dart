@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:quiz/app/_app.dart';
 import 'package:quiz/features/auth/domain/auth_manager.dart';
-import 'package:quiz/router/app_auto_router.gr.dart';
 
 class AuthGuard extends AutoRouteGuard {
   final AuthManager auth;
@@ -36,7 +36,6 @@ class AuthGuard extends AutoRouteGuard {
         resolver.next();
         router.removeLast();
         break;
-      default:
     }
   }
 }

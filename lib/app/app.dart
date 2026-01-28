@@ -4,16 +4,16 @@ import 'package:quiz/app/app_scope.dart';
 import 'package:quiz/features/main/splash_screen.dart';
 import 'package:yx_scope_flutter/yx_scope_flutter.dart';
 
-class AppPage extends StatefulWidget {
-  const AppPage({super.key, required this.child});
+class App extends StatefulWidget {
+  const App({super.key, required this.child});
 
   final Widget child;
 
   @override
-  State<AppPage> createState() => _AppPageState();
+  State<App> createState() => _AppState();
 }
 
-class _AppPageState extends State<AppPage> {
+class _AppState extends State<App> {
   AppScopeHolder? _scopeHolder;
 
   @override
