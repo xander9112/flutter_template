@@ -1,41 +1,43 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:quiz/app/_app.dart';
-import 'package:quiz/features/auth/domain/auth_manager.dart';
+import 'package:quiz/features/auth/_auth.dart';
 
 class AuthGuard extends AutoRouteGuard {
-  final AuthManager auth;
+  final IAuthManager<UserEntity> authManager;
 
-  AuthGuard(this.auth);
+  AuthGuard(this.authManager, {this.isAuthRequired = true});
+
+  final bool isAuthRequired;
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    if (!auth.isMustLogin) {
+    if (!isAuthRequired) {
       return resolver.next();
     }
 
-    if (auth.stage.value != AuthStage.authenticated) {
-      // сохраняем intent
+    if (authManager.authStatus.value.isBlocked) {
+      router.replace(NoAccessRoute());
 
-      auth.savePending(resolver.pendingRoutes);
+      return;
     }
 
-    switch (auth.stage.value) {
-      case AuthStage.onboarding:
-        router.replace(OnboardingRoute());
-        break;
+    if (authManager.onboardingStatus.value.isNotCompleted) {
+      router.replace(OnboardingRoute());
 
-      case AuthStage.unauthenticated:
-        router.replace(SignInRoute());
-        break;
-
-      case AuthStage.locked:
-        router.replace(VerifyRoute());
-        break;
-
-      case AuthStage.authenticated:
-        resolver.next();
-        router.removeLast();
-        break;
+      return;
     }
+
+    if (authManager.authStatus.value.isUnauthenticated) {
+      router.replace(SignInRoute());
+      return;
+    }
+
+    if (authManager.lockStatus.value.isLocked) {
+      router.replace(VerifyRoute());
+      return;
+    }
+
+    resolver.next();
+    router.removeLast();
   }
 }

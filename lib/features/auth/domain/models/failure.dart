@@ -1,8 +1,10 @@
 import 'package:quiz/features/debug/_debug.dart';
 
-class AuthFailure implements Failure {
-  @override
-  final String error;
+class AuthFailure extends Failure {
+  AuthFailure({required super.code, required super.message});
 
-  AuthFailure({required this.error});
+  @override
+  String getLocalizedString() {
+    return message;
+  }
 }

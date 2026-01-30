@@ -48,6 +48,7 @@ class AppRunner {
           router: AppRouter.createRouter(
             _debugService,
             diContainer.scopes.authScopeHolder.scope!.authManager,
+            isAuthRequired: diContainer.appConfig.isAuthRequired,
           ),
         ),
       );
@@ -88,6 +89,7 @@ class AppRunner {
   }) async {
     debugService.log(() => 'Тип сборки: ${env.name}');
     final diContainer = DiContainer(env: env, dService: debugService);
+
     await diContainer
         .init(
           onProgress: (name) => timerRunner.logOnProgress(name),

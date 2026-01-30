@@ -27,6 +27,9 @@ abstract interface class IAppConfig {
 
   /// Секретный ключ для шифрования данных
   String get secretKey;
+
+  /// Нужна ли авторизация для входа в приложение
+  bool get isAuthRequired;
 }
 
 /// {@template app_config_dev}
@@ -49,6 +52,10 @@ class AppConfigDev implements IAppConfig {
   @override
   @EnviedField()
   final String baseUrl = _Dev.baseUrl;
+
+  @override
+  @EnviedField()
+  final bool isAuthRequired = _Dev.isAuthRequired;
 
   @override
   @EnviedField(obfuscate: true)
@@ -79,6 +86,10 @@ class AppConfigProd implements IAppConfig {
   @override
   @EnviedField(obfuscate: true)
   final String secretKey = _Prod.secretKey;
+
+  @override
+  @EnviedField()
+  final bool isAuthRequired = _Prod.isAuthRequired;
 }
 
 /// {@template app_config_stage}
@@ -105,4 +116,8 @@ class AppConfigStage implements IAppConfig {
   @override
   @EnviedField(obfuscate: true)
   final String secretKey = _Stage.secretKey;
+
+  @override
+  @EnviedField()
+  final bool isAuthRequired = _Stage.isAuthRequired;
 }

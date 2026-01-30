@@ -449,7 +449,9 @@ class VerifyRoute extends _i22.PageRouteInfo<VerifyRouteArgs> {
       final args = data.argsAs<VerifyRouteArgs>(
         orElse: () => const VerifyRouteArgs(),
       );
-      return _i21.VerifyPage(key: args.key, onResult: args.onResult);
+      return _i22.WrappedRoute(
+        child: _i21.VerifyPage(key: args.key, onResult: args.onResult),
+      );
     },
   );
 }

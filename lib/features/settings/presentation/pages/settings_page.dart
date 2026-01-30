@@ -73,10 +73,10 @@ class SettingsPage extends StatelessWidget {
           ScopeBuilder<AuthScope>.withPlaceholder(
             builder: (context, scope) {
               return StreamBuilder(
-                initialData: scope.authManager.stage,
-                stream: scope.authManager.stage,
+                initialData: scope.authManager.authStatus.value,
+                stream: scope.authManager.authStatus,
                 builder: (context, snapshot) {
-                  if (scope.authManager.isSignIn) {
+                  if (scope.authManager.authStatus.value.isAuthenticated) {
                     return ListTile(
                       titleTextStyle: TextStyle(
                         color: Theme.of(context).colorScheme.error,

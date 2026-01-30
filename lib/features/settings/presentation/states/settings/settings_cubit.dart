@@ -41,7 +41,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   }
 
   Future<void> initSettingsFromServer() async {
-    await Future.delayed(Duration(seconds: 3));
+    // await Future.delayed(Duration(seconds: 3));
 
     // emit(state.copyWith(isWork: true));
   }

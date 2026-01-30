@@ -12,16 +12,18 @@ part of 'app_config.dart';
 final class _Dev {
   static const String baseUrl = 'https://dev';
 
+  static const bool isAuthRequired = true;
+
   static const List<int> _enviedkeysecretKey = <int>[
-    2340132473,
-    993053095,
-    1878678333,
+    524547297,
+    2980713988,
+    3295342575,
   ];
 
   static const List<int> _envieddatasecretKey = <int>[
-    2340132381,
-    993053122,
-    1878678347,
+    524547205,
+    2980714081,
+    3295342489,
   ];
 
   static final String secretKey = String.fromCharCodes(
@@ -38,33 +40,33 @@ final class _Dev {
 // generated_from: env/prod.env
 final class _Prod {
   static const List<int> _enviedkeybaseUrl = <int>[
-    455093772,
-    1064806230,
-    3568732047,
-    1498504347,
-    625146642,
-    1337523805,
-    1992138136,
-    2354690195,
-    4140381664,
-    1868924555,
-    3241124905,
-    3651747722,
+    3699528321,
+    2731184397,
+    2857062812,
+    3414667694,
+    4288611049,
+    437416200,
+    1216597589,
+    4024283733,
+    2731219953,
+    4243175540,
+    2501786896,
+    3224968741,
   ];
 
   static const List<int> _envieddatabaseUrl = <int>[
-    455093860,
-    1064806178,
-    3568732155,
-    1498504427,
-    625146721,
-    1337523815,
-    1992138167,
-    2354690236,
-    4140381584,
-    1868924665,
-    3241124934,
-    3651747822,
+    3699528425,
+    2731184505,
+    2857062888,
+    3414667742,
+    4288610970,
+    437416242,
+    1216597626,
+    4024283770,
+    2731219841,
+    4243175430,
+    2501787007,
+    3224968769,
   ];
 
   static final String baseUrl = String.fromCharCodes(
@@ -76,17 +78,17 @@ final class _Prod {
   );
 
   static const List<int> _enviedkeysecretKey = <int>[
-    451155142,
-    310028541,
-    2397697652,
-    46370741,
+    1528165307,
+    894408051,
+    4184165999,
+    3418290831,
   ];
 
   static const List<int> _envieddatasecretKey = <int>[
-    451155126,
-    310028431,
-    2397697563,
-    46370769,
+    1528165323,
+    894407937,
+    4184165888,
+    3418290923,
   ];
 
   static final String secretKey = String.fromCharCodes(
@@ -96,6 +98,8 @@ final class _Prod {
       growable: false,
     ).map((int i) => _envieddatasecretKey[i] ^ _enviedkeysecretKey[i]),
   );
+
+  static const bool isAuthRequired = true;
 }
 
 // coverage:ignore-file
@@ -103,35 +107,35 @@ final class _Prod {
 // generated_from: env/stage.env
 final class _Stage {
   static const List<int> _enviedkeybaseUrl = <int>[
-    3703643072,
-    1021794397,
-    2224427362,
-    2184597742,
-    1661511136,
-    2071546588,
-    1891327421,
-    1719015665,
-    3466911561,
-    2244702433,
-    3639766857,
-    3495546855,
-    1694345819,
+    1696745855,
+    4222428480,
+    2872993844,
+    1519047070,
+    134342190,
+    1119469856,
+    3812131658,
+    228787543,
+    1496099302,
+    2407972713,
+    3232639429,
+    3112910608,
+    1126757554,
   ];
 
   static const List<int> _envieddatabaseUrl = <int>[
-    3703643048,
-    1021794345,
-    2224427286,
-    2184597662,
-    1661511059,
-    2071546598,
-    1891327378,
-    1719015646,
-    3466911546,
-    2244702357,
-    3639766824,
-    3495546752,
-    1694345790,
+    1696745751,
+    4222428468,
+    2872993856,
+    1519047150,
+    134342237,
+    1119469850,
+    3812131685,
+    228787576,
+    1496099221,
+    2407972637,
+    3232639396,
+    3112910711,
+    1126757591,
   ];
 
   static final String baseUrl = String.fromCharCodes(
@@ -143,19 +147,19 @@ final class _Stage {
   );
 
   static const List<int> _enviedkeysecretKey = <int>[
-    4140950242,
-    1053700729,
-    1883758367,
-    1818452115,
-    599494995,
+    77427731,
+    1508975458,
+    696222104,
+    1395783878,
+    3727916802,
   ];
 
   static const List<int> _envieddatasecretKey = <int>[
-    4140950161,
-    1053700621,
-    1883758462,
-    1818452212,
-    599494966,
+    77427808,
+    1508975382,
+    696222201,
+    1395783841,
+    3727916903,
   ];
 
   static final String secretKey = String.fromCharCodes(
@@ -165,4 +169,6 @@ final class _Stage {
       growable: false,
     ).map((int i) => _envieddatasecretKey[i] ^ _enviedkeysecretKey[i]),
   );
+
+  static const bool isAuthRequired = true;
 }

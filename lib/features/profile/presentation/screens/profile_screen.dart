@@ -59,10 +59,10 @@ class _ProfileScreenView extends StatelessWidget {
       body: ScopeBuilder<AuthScope>.withPlaceholder(
         builder: (context, scope) {
           return StreamBuilder(
-            initialData: scope.authManager.stage,
-            stream: scope.authManager.stage,
+            initialData: scope.authManager.authStatus.value,
+            stream: scope.authManager.authStatus,
             builder: (context, snapshot) {
-              if (scope.authManager.isSignIn) {
+              if (scope.authManager.authStatus.value.isAuthenticated) {
                 return Center(
                   child: ElevatedButton(
                     onPressed: scope.authManager.signOut,
@@ -73,7 +73,7 @@ class _ProfileScreenView extends StatelessWidget {
 
               return Center(
                 child: ElevatedButton(
-                  onPressed: scope.authManager.signIn,
+                  onPressed: () => scope.authManager.signIn('demo', 'demo'),
                   child: Text('SignIn'),
                 ),
               );

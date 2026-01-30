@@ -37,7 +37,11 @@ final class DiScopes {
     required DiContainer diContainer,
   }) async {
     try {
-      authScopeHolder = AuthScopeHolder(debugService: diContainer.debugService);
+      authScopeHolder = AuthScopeHolder(
+        debugService: diContainer.debugService,
+        secureStorage: diContainer.services.secureStorage,
+      );
+
       await authScopeHolder.create();
 
       onProgress(AuthScopeHolder.name);

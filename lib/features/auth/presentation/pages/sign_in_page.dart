@@ -26,7 +26,9 @@ class SignInPage extends StatelessWidget {
             ),
             ElevatedButton(
               onPressed: () {
-                ScopeProvider.of<AuthScope>(context)?.authManager.signIn();
+                ScopeProvider.of<AuthScope>(
+                  context,
+                )?.authManager.signIn('demo', 'demo');
               },
               child: Text('Sign In'),
             ),

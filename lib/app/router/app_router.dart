@@ -22,18 +22,26 @@ class AppRouter {
   /// Метод для создания экземпляра GoRouter
   static RootStackRouter createRouter(
     IDebugService debugService,
-    AuthManager authManager,
-  ) {
-    return AppAutoRouter(authManager: authManager);
+    IAuthManager<UserEntity> authManager, {
+    bool isAuthRequired = true,
+  }) {
+    return AppAutoRouter(
+      authManager: authManager,
+      isAuthRequired: isAuthRequired,
+    );
   }
 }
 
 @AutoRouterConfig(replaceInRouteName: 'Flow|Page|Screen,Route')
 class AppAutoRouter extends RootStackRouter {
-  final AuthManager _authManager;
+  final IAuthManager<UserEntity> _authManager;
 
-  AppAutoRouter({required AuthManager authManager})
-    : _authManager = authManager;
+  AppAutoRouter({
+    required IAuthManager<UserEntity> authManager,
+    this.isAuthRequired = true,
+  }) : _authManager = authManager;
+
+  final bool isAuthRequired;
 
   @override
   RouteType get defaultRouteType => RouteType.adaptive();
@@ -45,7 +53,7 @@ class AppAutoRouter extends RootStackRouter {
       transitionsBuilder: TransitionsBuilders.noTransition,
       page: MainRoute.page,
       initial: true,
-      guards: [AuthGuard(_authManager)],
+      guards: [AuthGuard(_authManager, isAuthRequired: isAuthRequired)],
       children: [
         CustomRoute(
           path: 'home',
@@ -64,6 +72,12 @@ class AppAutoRouter extends RootStackRouter {
     AutoRoute(path: '/settings', page: SettingsRoute.page),
     ...authRoutes,
     ...debugRoutes,
+
+    CustomRoute(
+      page: NoAccessRoute.page,
+      path: '/no-access',
+      transitionsBuilder: TransitionsBuilders.noTransition,
+    ),
 
     RedirectRoute(path: '/auth', redirectTo: '/'),
 

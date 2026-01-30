@@ -18,7 +18,7 @@ class OnboardingPage extends StatelessWidget {
           onPressed: () {
             ScopeProvider.of<AuthScope>(
               context,
-            )?.authManager.completeOnboarding();
+            )?.authManager.finishOnboarding();
           },
           child: Text('Пропустить'),
         ),
