@@ -1,0 +1,35 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "dev",
+            "type": "dart",
+            "request": "launch",
+            "program": "${workspaceFolder}/apps/app/lib/targets/dev.dart",
+            "args": [
+                "--flavor",
+                "dev",
+            ]
+        },
+        {
+            "name": "stage",
+            "type": "dart",
+            "request": "launch",
+            "program": "${workspaceFolder}/apps/app/lib/targets/stage.dart",
+            "args": [
+                "--flavor",
+                "stage",
+            ]
+        },
+        {
+            "name": "prod",
+            "type": "dart",
+            "request": "launch",
+            "program": "${workspaceFolder}/apps/app/lib/targets/prod.dart",
+            "args": [
+                "--flavor",
+                "prod",
+            ]
+        },
+    ]
+}

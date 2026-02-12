@@ -1,0 +1,19 @@
+name: hms_app_services
+description: "Huawei сервисы для приложения"
+version: 0.0.1
+publish_to: none
+resolution: workspace
+
+environment:
+  sdk: ">=3.10.4 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Обязательные интерфейсы
+  i_app_services:
+    path: ../../i_app_services
+
+dev_dependencies:
+  flutter_lints: 6.0.0

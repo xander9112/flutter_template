@@ -1,0 +1,62 @@
+Running `(cd /Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/; TMPDIR=/var/folders/zy/_q1ws3rs1yv3p6s4nm_rz5kw0000gn/T/ PATH=/Users/xander9112/.nvm/versions/node/v24.12.0/bin:/opt/homebrew/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home/bin:/Users/xander9112/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand:/Users/xander9112/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli:/Users/xander9112/dev/flutter/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/local/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/bin:/var/run/com.apple.security.cryptexd/codex.system/bootstrap/usr/appleinternal/bin:/opt/pmk/env/global/bin:/Library/Apple/usr/bin:/Users/xander9112/dev/flutter/bin/:/Users/xander9112/Library/Application Support/Code/User/globalStorage/github.copilot-chat/debugCommand:/Users/xander9112/Library/Application Support/Code/User/globalStorage/github.copilot-chat/copilotCli:/Users/xander9112/.nvm/versions/node/v24.12.0/bin:/opt/homebrew/Cellar/openjdk@17/17.0.17/libexec/openjdk.jdk/Contents/Home/bin:/Users/xander9112/dev/flutter/bin:/Users/xander9112/Library/Application Support/JetBrains/Toolbox/scripts:/Users/xander9112/development/flutter/bin:/Users/xander9112/.pub-cache/bin:/Users/xander9112/Library/Application Support/JetBrains/Toolbox/scripts:/Users/xander9112/development/flutter/bin:/Users/xander9112/.pub-cache/bin HOME=/Users/xander9112 /Users/xander9112/dev/flutter/bin/cache/dart-sdk/bin/dart --packages=/Users/xander9112/dev/_mobile/xela/.dart_tool/package_config.json /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/objective_c/9fb02c5622aea66c3a53a942a16bf409/hook.dill --config=/Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/objective_c/9fb02c5622aea66c3a53a942a16bf409/input.json )`.
+INFO: 2026-02-12 08:04:55.785913: Running `which clang`.
+
+INFO: 2026-02-12 08:04:55.799852: Running `/usr/bin/clang --version`.
+
+INFO: 2026-02-12 08:04:55.888563: Running `/usr/bin/clang --version`.
+
+INFO: 2026-02-12 08:04:55.905407: Running: /usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-darwin -mmacos-version-min=12 -c /Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/include/dart_api_dl.c -fpic -I src -o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-02-12 08:04:55.905721: Running: /usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-darwin -mmacos-version-min=12 -c /Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/objective_c.c -fpic -I src -o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/objective_c.c.o
+
+INFO: 2026-02-12 08:04:55.905854: Running: /usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-darwin -mmacos-version-min=12 -c /Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/test/util.c -fpic -I src -o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/test/util.c.o
+
+INFO: 2026-02-12 08:04:55.905965: Running: /usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-darwin -mmacos-version-min=12 -x objective-c -fobjc-arc -c /Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/input_stream_adapter.m -fpic -I src -o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/input_stream_adapter.m.o
+
+INFO: 2026-02-12 08:04:55.906066: Running: /usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-darwin -mmacos-version-min=12 -x objective-c -fobjc-arc -c /Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/objective_c.m -fpic -I src -o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/objective_c.m.o
+
+INFO: 2026-02-12 08:04:55.906163: Running: /usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-darwin -mmacos-version-min=12 -x objective-c -fobjc-arc -c /Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/observer.m -fpic -I src -o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/observer.m.o
+
+INFO: 2026-02-12 08:04:55.906262: Running: /usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-darwin -mmacos-version-min=12 -x objective-c -fobjc-arc -c /Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/ns_number.m -fpic -I src -o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/ns_number.m.o
+
+INFO: 2026-02-12 08:04:55.906441: Running: /usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-darwin -mmacos-version-min=12 -x objective-c -fobjc-arc -c /Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/protocol.m -fpic -I src -o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/protocol.m.o
+
+INFO: 2026-02-12 08:04:55.906608: Running: /usr/bin/clang -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-darwin -mmacos-version-min=12 -x objective-c -fobjc-arc -c /Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/objective_c_bindings_generated.m -fpic -I src -o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-02-12 08:04:55.991335: 
+INFO: 2026-02-12 08:04:55.991348: 
+
+INFO: 2026-02-12 08:04:55.991113: 
+INFO: 2026-02-12 08:04:55.991190: 
+INFO: 2026-02-12 08:04:55.991219: Generated /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/include/dart_api_dl.c.o
+
+INFO: 2026-02-12 08:04:55.998181: 
+INFO: 2026-02-12 08:04:55.998211: 
+INFO: 2026-02-12 08:04:55.998223: Generated /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/test/util.c.o
+
+INFO: 2026-02-12 08:04:55.998939: 
+INFO: 2026-02-12 08:04:55.998967: 
+INFO: 2026-02-12 08:04:55.998983: Generated /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/observer.m.o
+
+INFO: 2026-02-12 08:04:56.001353: Generated /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/protocol.m.o
+
+INFO: 2026-02-12 08:04:56.213139: 
+INFO: 2026-02-12 08:04:56.213174: 
+INFO: 2026-02-12 08:04:56.213182: Generated /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/ns_number.m.o
+
+INFO: 2026-02-12 08:04:56.218570: 
+INFO: 2026-02-12 08:04:56.218586: 
+INFO: 2026-02-12 08:04:56.218594: Generated /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/objective_c.m.o
+
+INFO: 2026-02-12 08:04:56.220065: Generated /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/input_stream_adapter.m.o
+
+INFO: 2026-02-12 08:04:56.235718: 
+INFO: 2026-02-12 08:04:56.235745: 
+INFO: 2026-02-12 08:04:56.235755: Generated /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/objective_c_bindings_generated.m.o
+
+INFO: 2026-02-12 08:04:56.236029: Running: /usr/bin/clang -shared -Wl,-encryptable -undefined dynamic_lookup -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk -target arm64-apple-darwin -mmacos-version-min=12 /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/include/dart_api_dl.c.o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/objective_c.c.o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/test/util.c.o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/input_stream_adapter.m.o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/objective_c.m.o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/observer.m.o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/ns_number.m.o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/protocol.m.o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/obj/src/objective_c_bindings_generated.m.o -o /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/objective_c.dylib
+
+INFO: 2026-02-12 08:04:56.337690: 
+INFO: 2026-02-12 08:04:56.337751: 
+INFO: 2026-02-12 08:04:56.337761: Generated /Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9fb02c5622/objective_c.dylib
+

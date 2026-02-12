@@ -1,0 +1,24 @@
+{
+    "explorer.fileNesting.patterns": {
+        "mason.yaml": "mason-lock.json",
+        "pubspec.yaml": ".packages, .metadata, pubspec.lock, analysis_options.yaml, .flutter-plugins, .flutter-plugins-dependencies, xela_app.iml, melos_xela_app.iml",
+        "flutter_launcher_icons.yaml": "flutter_launcher_icons-*.yaml",
+        "*.dart": "${capture}.g.dart, ${capture}.freezed.dart",
+        "melos.yaml": "melos_*.iml"
+    },
+    "cSpell.words": [
+        "appiconset",
+        "combinators",
+        "flavorizr",
+        "interps",
+        "NNDB",
+        "tearoffs",
+        "xcassets"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.fixAll": "explicit",
+        "source.organizeImports": "explicit"
+    },
+    "editor.formatOnSave": true,
+    "java.compile.nullAnalysis.mode": "disabled"
+}
