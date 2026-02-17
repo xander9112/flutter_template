@@ -35,3 +35,11 @@ Update your project's AndroidManifest.xml file to include the USE_BIOMETRIC perm
           package="com.example.app">
 <uses-permission android:name="android.permission.USE_BIOMETRIC"/>
 <manifest>
+
+Если нужно не использовать local_auth или биометрию просто измени эти настройки в файле modules/auth/lib/src/domain/auth_manager.dart
+
+@override
+AuthSettings settings = const AuthSettings(
+useBiometric: false,
+useLocalAuth: false,
+);

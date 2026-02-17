@@ -28,22 +28,6 @@ class LocalAuthScopeContainer extends ChildScopeContainer<AuthScopeContainer>
 
   final IAuthManager<UserEntity> _authManager;
 
-  @Deprecated('move to AuthScope')
-  late final Dep<IBiometricRepository> _biometricRepositoryDep =
-      dep<IBiometricRepository>(
-        () => BiometricRepository(authStorage: parent.authStorageDep.get),
-      );
-
-  // late final Dep<LocalAuthCubit> _localAuthCubitDep = dep<LocalAuthCubit>(
-  //   () => LocalAuthCubit(
-  //     authManager: _authManager,
-  //     getBiometricSupportModel: GetBiometricSupportModel(
-  //       _biometricRepositoryDep.get,
-  //     ),
-  //     checkLocalAuthUseCase: CheckLocalAuthUseCase(_authManager),
-  //   ),
-  // );
-
   @override
   LocalAuthCubit localAuthCubit({
     required String localizedReasonParam,
