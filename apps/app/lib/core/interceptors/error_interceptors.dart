@@ -1,20 +1,7 @@
+import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
 
 class ErrorInterceptors extends Interceptor {
-  @override
-  void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    // print('REQUEST[${options.method}] => PATH: ${options.path}');
-    super.onRequest(options, handler);
-  }
-
-  @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print(
-      'RESPONSE[${response.statusCode}] => PATH: ${response.requestOptions.path}',
-    );
-    super.onResponse(response, handler);
-  }
-
   @override
   void onError(
     DioException err,
@@ -32,8 +19,8 @@ class ErrorInterceptors extends Interceptor {
             requestOptions: err.requestOptions,
             data: {
               'error': {
-                'code': err.type.name,
-                'message': '',
+                'code': toUpperSnakeCase(err.type.name),
+                'message': err.message,
                 'timestamp': DateTime.now().toIso8601String(),
               },
             },

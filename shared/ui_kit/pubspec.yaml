@@ -25,6 +25,9 @@ dev_dependencies:
     sdk: flutter
   very_good_analysis: 10.1.0
 
+flutter:
+  generate: true
+
 flutter_gen:
   integrations:
     flutter_svg: true

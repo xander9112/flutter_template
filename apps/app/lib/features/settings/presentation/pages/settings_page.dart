@@ -1,6 +1,7 @@
 import 'package:app/features/settings/_settings.dart';
 import 'package:auth/auth.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:core/core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:yx_scope_flutter/yx_scope_flutter.dart';
@@ -12,7 +13,7 @@ class SettingsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Settings page')),
+      appBar: AppBar(title: const Text('Settings page')),
       body: Column(
         children: [
           Expanded(
@@ -20,7 +21,7 @@ class SettingsPage extends StatelessWidget {
               children: [
                 ListTile(
                   onTap: ScopeProvider.of<AuthScope>(context)?.authManager.lock,
-                  title: Text('Lock'),
+                  title: const Text('Lock'),
                 ),
                 ScopeBuilder<SettingsScope>.withPlaceholder(
                   builder: (context, scope) {
@@ -32,12 +33,12 @@ class SettingsPage extends StatelessWidget {
                           builder: (context) {
                             return Container(
                               width: double.infinity,
-                              padding: EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(16),
                               child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text('Select theme'),
+                                  const Text('Select theme'),
 
                                   ...ThemeMode.values.map((e) {
                                     return ListTile(
@@ -58,10 +59,60 @@ class SettingsPage extends StatelessWidget {
                           scope.settingsCubit.changeTheme(mode);
                         }
                       },
-                      title: Text('Change Theme'),
+                      title: const Text('Change Theme'),
                       trailing: BlocBuilder<SettingsCubit, SettingsState>(
                         builder: (context, state) {
                           return Text(state.themeMode.name);
+                        },
+                      ),
+                    );
+                  },
+                ),
+                ScopeBuilder<SettingsScope>.withPlaceholder(
+                  builder: (context, scope) {
+                    return ListTile(
+                      onTap: () async {
+                        final mode = await showModalBottomSheet<Locale>(
+                          context: context,
+                          useRootNavigator: true,
+                          builder: (context) {
+                            return Container(
+                              width: double.infinity,
+                              padding: const EdgeInsets.all(16),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(context.coreLocalizations.selectLocale),
+
+                                  ...['en', 'ru'].map((e) {
+                                    return ListTile(
+                                      title: Text(e),
+                                      selected:
+                                          scope
+                                              .settingsCubit
+                                              .state
+                                              .locale
+                                              .languageCode ==
+                                          e,
+                                      onTap: () =>
+                                          context.router.pop(Locale(e)),
+                                    );
+                                  }),
+                                ],
+                              ),
+                            );
+                          },
+                        );
+
+                        if (mode != null) {
+                          scope.settingsCubit.changeLocale(mode);
+                        }
+                      },
+                      title: Text(context.coreLocalizations.selectLocale),
+                      trailing: BlocBuilder<SettingsCubit, SettingsState>(
+                        builder: (context, state) {
+                          return Text(state.locale.languageCode);
                         },
                       ),
                     );
@@ -84,17 +135,17 @@ class SettingsPage extends StatelessWidget {
                       onTap: ScopeProvider.of<AuthScope>(
                         context,
                       )?.authManager.signOut,
-                      title: Text('SignOut', textAlign: TextAlign.center),
+                      title: const Text('SignOut', textAlign: TextAlign.center),
                     );
                   }
 
-                  return SizedBox.shrink();
+                  return const SizedBox.shrink();
                 },
               );
             },
           ),
 
-          SizedBox(height: 32),
+          const SizedBox(height: 32),
         ],
       ),
     );

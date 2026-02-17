@@ -65,15 +65,14 @@ class _PinCodeEnterFormState extends State<PinCodeEnterForm> {
           flex: 2,
           child: PinCodeKeyboard(
             useBiometric: widget.useBiometric,
-            onPressedNumber: onPressedNumber,
+            onPressedNumber: widget.message == null ? onPressedNumber : null,
             onReset: onPressedReset,
-            onDelete: onPressedDelete,
+            onDelete: code.isNotEmpty ? onPressedDelete : null,
             onBiometricPressed: onBiometricPressed,
-            reset: 'reset',
-            delete: 'delete',
+            reset: context.authLocalizations.reset,
             icon: widget.isFace
-                ? Assets.icons.faceId.path
-                : Assets.icons.fingerprint.path,
+                ? const Icon(Icons.fingerprint)
+                : const Icon(Icons.fingerprint),
           ),
         ),
       ],
@@ -117,9 +116,11 @@ class _PinCodeEnterFormState extends State<PinCodeEnterForm> {
       return;
     }
 
-    setState(() {
-      code = '';
-    });
+    if (mounted) {
+      setState(() {
+        code = '';
+      });
+    }
   }
 
   void onBiometricPressed() {

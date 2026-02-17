@@ -18,6 +18,8 @@ dependencies:
     path: ../../shared/dependencies
   flutter:
     sdk: flutter
+  ui_kit:
+    path: ../../shared/ui_kit
 
 dev_dependencies:
   auto_route_generator: 10.4.0

@@ -1,30 +1,28 @@
 part of 'sign_in_cubit.dart';
 
 @immutable
-sealed class SignInState {
+sealed class SignInState with EquatableMixin {
   const SignInState(this.form);
 
   final SignInForm form;
 
   bool get isLoading => this is SignInLoading;
 
-  bool get inSubmitting => this is SignInSubmitting;
+  @mustCallSuper
+  @override
+  List<Object?> get props => [];
+}
 
-  bool get isError => this is SignInError;
+class SignInInitializing extends SignInState {
+  const SignInInitializing(super.form);
+}
+
+class SignInInitial extends SignInState {
+  const SignInInitial(super.form);
 }
 
 class SignInLoading extends SignInState {
   const SignInLoading(super.form);
-}
-
-class SignInInitial extends SignInState {
-  const SignInInitial(super.form, {required this.strs});
-
-  final List<String> strs;
-}
-
-class SignInSubmitting extends SignInState {
-  const SignInSubmitting(super.form);
 }
 
 class SignInSuccess extends SignInState {
@@ -34,5 +32,8 @@ class SignInSuccess extends SignInState {
 class SignInError extends SignInState {
   const SignInError(super.form, this.error);
 
-  final Failure error;
+  final AuthFailure error;
+
+  @override
+  List<Object?> get props => [...super.props, error];
 }

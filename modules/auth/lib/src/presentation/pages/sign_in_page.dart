@@ -14,7 +14,7 @@ class SignInPage extends StatelessWidget implements AutoRouteWrapper {
       body: BlocBuilder<SignInCubit, SignInState>(
         builder: (context, state) {
           return switch (state) {
-            SignInLoading() => const Center(child: UiProgressIndicator()),
+            SignInInitializing() => const Center(child: UiProgressIndicator()),
 
             Object() => Padding(
               padding: const EdgeInsets.all(Insets.l),
@@ -27,10 +27,6 @@ class SignInPage extends StatelessWidget implements AutoRouteWrapper {
                   ),
                   const SizedBox(height: Insets.xxxl),
                   const Spacer(),
-                  ...switch (state) {
-                    SignInInitial() => state.strs.map(Text.new).toList(),
-                    Object() => [],
-                  },
 
                   ReactiveForm(
                     formGroup: state.form.form,
@@ -47,29 +43,27 @@ class SignInPage extends StatelessWidget implements AutoRouteWrapper {
                           onSubmitted: (control) =>
                               context.read<SignInCubit>().signIn(),
                         ),
-                        if (state.isError)
-                          Row(
+                        switch (state) {
+                          SignInError() => Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Column(
-                                children: [
-                                  const SizedBox(height: Insets.l),
-                                  Text(
-                                    (state as SignInError).error.toString(),
-                                    textAlign: TextAlign.center,
-                                    style: Theme.of(context).textTheme.bodyLarge
-                                        ?.copyWith(
-                                          color: Theme.of(
-                                            context,
-                                          ).colorScheme.error,
-                                        ),
-                                  ),
-                                ],
+                              Flexible(
+                                child: Text(
+                                  state.error.toString(),
+                                  textAlign: TextAlign.center,
+                                  style: Theme.of(context).textTheme.bodyLarge
+                                      ?.copyWith(
+                                        color: Theme.of(
+                                          context,
+                                        ).colorScheme.error,
+                                      ),
+                                ),
                               ),
                             ],
-                          )
-                        else
-                          const SizedBox.shrink(),
+                          ),
+                          Object() => const SizedBox.shrink(),
+                        },
+
                         const SizedBox(height: Insets.l),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +71,7 @@ class SignInPage extends StatelessWidget implements AutoRouteWrapper {
                             ReactiveFormConsumer(
                               builder: (context, formGroup, child) {
                                 final disabled =
-                                    formGroup.invalid || state.inSubmitting;
+                                    formGroup.invalid || state.isLoading;
                                 return UiButton(
                                   onPressed: !disabled
                                       ? context.read<SignInCubit>().signIn

@@ -3,5 +3,18 @@
     "signInTitle": "Войти",
     "signUpTitle": "Зарегистрироваться",
     "login": "Логин",
-    "password": "Пароль"
+    "password": "Пароль",
+    "pinCodeError": "{error, select, PIN_CODE_NOT_CORRECT {Неверный PIN-код} PIN_CODE_ATTEMPTS_ENDED {Превышено количество попыток} PIN_CODE_NOT_CONFIRMED {PIN-код не подтвержден} other {Неизвестная ошибка}}",
+    "enterPinCode": "Введите PIN-код",
+    "repeatPinCode": "Повторите PIN-код",
+    "settingPinCode": "Настроить PIN-код",
+    "reset": "Сбросить",
+    "resetTitle": "Вы уверены?",
+    "resetDescription": "После сброса PIN-кода, вам нужно будет авторизоваться.",
+    "useBiometricsToLogin": "Использовать биометрию?",
+    "localizedReason": "Подтвердите личность для продолжения",
+    "biometrySignInTitle": "Подтверждение входа",
+    "biometrySignInHint": "Подтвердите личность с помощью биометрии",
+    "biometryCancelButton": "Отмена",
+    "biometryLocalizedFallbackTitle": "Ввести пароль"
 }

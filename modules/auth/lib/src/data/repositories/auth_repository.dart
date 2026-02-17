@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:auth/src/_src.dart';
@@ -20,8 +21,24 @@ class AuthRepository implements IAuthRepository<TokensDTO, UserEntity> {
   Future<bool?> get useBiometric => _authStorage.useBiometric;
 
   @override
-  Future<bool> comparePinCode(String value) {
-    return _authStorage.comparePinCode(value);
+  Future<bool> comparePinCode(String value) async {
+    final result = await _authStorage.comparePinCode(value);
+
+    if (!result) {
+      final attempts = await _authStorage.getPinCodeAttempts();
+
+      if (attempts > 2) {
+        await _authStorage.resetPinCodeAttempts();
+
+        throw AuthFailure(code: AuthErrors.pinCodeAttemptsEnded, message: '');
+      }
+
+      await _authStorage.updatePinCodeAttempts();
+
+      throw AuthFailure(code: AuthErrors.pinCodeNotCorrect, message: '');
+    }
+
+    return result;
   }
 
   @override
@@ -90,6 +107,12 @@ class AuthRepository implements IAuthRepository<TokensDTO, UserEntity> {
     String password,
   ) async {
     try {
+      final isDemo = _checkDemoUser(login, password);
+
+      if (isDemo) {
+        return _demoUser();
+      }
+
       final result = await _remoteAuthDataSource.signIn(
         request: <String, dynamic>{'login': login, 'password': password},
       );
@@ -155,7 +178,7 @@ class AuthRepository implements IAuthRepository<TokensDTO, UserEntity> {
   @override
   Future<Either<AuthFailure, bool>> signOut() async {
     try {
-      await _remoteAuthDataSource.signOut();
+      unawaited(_remoteAuthDataSource.signOut());
 
       await _userStorage.removeCurrentUser();
 
@@ -173,6 +196,7 @@ class AuthRepository implements IAuthRepository<TokensDTO, UserEntity> {
 
       return Left(AuthFailure(code: 'e.response?.statusCode', message: ''));
     } catch (e) {
+      print(e);
       return Left(AuthFailure(code: 'UNKNOWN', message: e.toString()));
     }
   }
@@ -261,5 +285,27 @@ class AuthRepository implements IAuthRepository<TokensDTO, UserEntity> {
   @override
   Future<bool> watchedOnboarding() async {
     return _userStorage.watchedOnboarding();
+  }
+
+  bool _checkDemoUser(String login, String password) {
+    return login == 'demo' && password == 'demo';
+  }
+
+  Future<Either<AuthFailure, TokensDTO>> _demoUser() async {
+    await _userStorage.saveCurrentUser(
+      jsonEncode(
+        const AuthenticatedUser(
+          id: -1,
+          email: 'demo@demo.ru',
+          login: 'demo',
+          lastName: 'demo',
+          firstName: 'demo',
+        ).toJson(),
+      ),
+    );
+
+    return const Right(
+      TokensDTO(accessToken: 'accessToken', refreshToken: 'refreshToken'),
+    );
   }
 }

@@ -10,7 +10,7 @@ class MockRemoteAuthDataSource implements RemoteAuthDataSource {
         id: 1,
         email: 'demo@mail.ru',
         login: 'demo',
-        lastName: 'Demovich',
+        lastName: 'Demonov',
         firstName: 'Demon',
       ),
     );
@@ -18,8 +18,13 @@ class MockRemoteAuthDataSource implements RemoteAuthDataSource {
 
   @override
   Future<TokensDTO> refreshToken({required String token}) {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
+    return Future.delayed(
+      Duration.zero,
+      () => const TokensDTO(
+        accessToken: 'accessToken',
+        refreshToken: 'refreshToken',
+      ),
+    );
   }
 
   @override
@@ -33,8 +38,6 @@ class MockRemoteAuthDataSource implements RemoteAuthDataSource {
         ),
       );
     }
-
-    final fields = [];
 
     if (request['login'].toString().contains('@')) {
       throw DioException.badResponse(
@@ -68,7 +71,7 @@ class MockRemoteAuthDataSource implements RemoteAuthDataSource {
           'error': {
             'code': 'UNAUTHENTICATED',
             'message': 'Wrong login or password',
-            'fields': fields,
+            'fields': <Map<String, dynamic>>[],
           },
         },
       ),

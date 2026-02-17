@@ -9,7 +9,8 @@ abstract class AuthScope implements Scope {
   IAuthManager<UserEntity> get authManager;
 
   SignInCubit get signInCubit;
-  LocalAuthCubit get localAuthCubit;
+
+  LocalAuthScopeHolder get localAuthScopeHolder;
 }
 
 class AuthScopeContainer extends ScopeContainer implements AuthScope {
@@ -36,7 +37,7 @@ class AuthScopeContainer extends ScopeContainer implements AuthScope {
         () => RestRemoteAuthDataSource(_httpClient.client),
       );
 
-  late final Dep<AuthStorage> _authStorageDep = dep<AuthStorage>(
+  late final Dep<AuthStorage> authStorageDep = dep<AuthStorage>(
     () => AuthStorage(storage: _secureStorage),
   );
 
@@ -47,41 +48,45 @@ class AuthScopeContainer extends ScopeContainer implements AuthScope {
   late final Dep<IAuthRepository<TokensDTO, UserEntity>> _authRepositoryDep =
       dep<IAuthRepository<TokensDTO, UserEntity>>(
         () => AuthRepository(
-          authStorage: _authStorageDep.get,
+          authStorage: authStorageDep.get,
           remoteAuthDataSource: _remoteAuthDataSourceDep.get,
           userStorage: _userStorageDep.get,
         ),
+      );
+
+  late final Dep<IBiometricRepository> _biometricRepositoryDep =
+      dep<IBiometricRepository>(
+        () => BiometricRepository(authStorage: authStorageDep.get),
       );
 
   late final Dep<IAuthManager<UserEntity>> _manager = dep<AuthManager>(
     () => AuthManager(
       debugService: _debugService,
       authRepository: _authRepositoryDep.get,
-    ),
-  );
-
-  late final Dep<LocalAuthCubit> _localAuthCubitDep = dep<LocalAuthCubit>(
-    () => LocalAuthCubit(
-      authRepository: _authRepositoryDep.get,
-      authManager: _manager.get,
+      biometricRepository: _biometricRepositoryDep.get,
     ),
   );
 
   late final Dep<SignInCubit> _signInCubitDep = dep<SignInCubit>(
-    () => SignInCubit(
-      repository: _authRepositoryDep.get,
-      authManager: _manager.get,
-    ),
+    () => SignInCubit(authManager: _manager.get),
   );
 
   @override
   IAuthManager<UserEntity> get authManager => _manager.get;
 
   @override
-  LocalAuthCubit get localAuthCubit => _localAuthCubitDep.get;
+  SignInCubit get signInCubit => _signInCubitDep.get;
+
+  late final Dep<LocalAuthScopeHolder> _localAuthScopeHolder = dep(
+    () => LocalAuthScopeHolder(
+      this,
+      authManager: authManager,
+      debugService: _debugService,
+    ),
+  );
 
   @override
-  SignInCubit get signInCubit => _signInCubitDep.get;
+  LocalAuthScopeHolder get localAuthScopeHolder => _localAuthScopeHolder.get;
 }
 
 class AuthScopeHolder extends ScopeHolder<AuthScopeContainer> {

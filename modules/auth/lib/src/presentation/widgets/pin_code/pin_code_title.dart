@@ -1,3 +1,4 @@
+import 'package:auth/src/_src.dart';
 import 'package:flutter/material.dart';
 
 class PinCodeTitle extends StatelessWidget {
@@ -17,13 +18,13 @@ class PinCodeTitle extends StatelessWidget {
     final style = Theme.of(context).textTheme.titleMedium;
 
     if (hasPinCode) {
-      return Text('enterPinCode', style: style);
+      return Text(context.authLocalizations.enterPinCode, style: style);
     }
 
     if (hasTemporaryCode) {
-      return Text('repeatPinCode', style: style);
+      return Text(context.authLocalizations.repeatPinCode, style: style);
     }
 
-    return Text('settingPinCode', style: style);
+    return Text(context.authLocalizations.settingPinCode, style: style);
   }
 }

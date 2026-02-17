@@ -8,6 +8,7 @@ class AuthStorage {
   final String _tokenKey = 'token';
   final String _refreshTokenKey = 'refreshToken';
   final String _pinCodeKey = 'pinCode';
+  final String _pinCodeAttemptsKey = 'pinCodeAttemptsKey';
   final String _useBiometricKey = 'use_biometric';
   final String _useLocalAuthKey = 'use_local_auth';
   final String _blockUserDurationKey = 'block_user_duration';
@@ -15,6 +16,32 @@ class AuthStorage {
   Future<bool> get hasToken => _storage.containsKey(_tokenKey);
 
   Future<bool> get hasRefreshToken => _storage.containsKey(_refreshTokenKey);
+
+  Future<bool> get useLocalAuth async {
+    final useLocalAuth = await _storage.read(_useLocalAuthKey);
+
+    if (useLocalAuth != null && useLocalAuth.isNotEmpty) {
+      return useLocalAuth == 'true';
+    }
+
+    return true;
+  }
+
+  Future<int> getPinCodeAttempts() async {
+    final attempts = await _storage.read(_pinCodeAttemptsKey);
+
+    return int.tryParse(attempts ?? '0') ?? 0;
+  }
+
+  Future<void> updatePinCodeAttempts() async {
+    final attempts = await getPinCodeAttempts();
+
+    return _storage.write(_pinCodeAttemptsKey, (attempts + 1).toString());
+  }
+
+  Future<void> resetPinCodeAttempts() async {
+    return _storage.write(_pinCodeAttemptsKey, '0');
+  }
 
   Future<void> setToken(String value) {
     return _storage.write(_tokenKey, value);
@@ -94,16 +121,6 @@ class AuthStorage {
 
   Future<void> setUseLocalAuth(bool value) {
     return _storage.write(_useLocalAuthKey, value.toString());
-  }
-
-  Future<bool> get useLocalAuth async {
-    final useLocalAuth = await _storage.read(_useLocalAuthKey);
-
-    if (useLocalAuth != null && useLocalAuth.isNotEmpty) {
-      return useLocalAuth == 'true';
-    }
-
-    return true;
   }
 
   Future<void> removeUseLocalAuth() {

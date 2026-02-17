@@ -121,6 +121,84 @@ abstract class AuthLocalizations {
   /// In en, this message translates to:
   /// **'Password'**
   String get password;
+
+  /// No description provided for @pinCodeError.
+  ///
+  /// In en, this message translates to:
+  /// **'{error, select, PIN_CODE_NOT_CORRECT {Incorrect PIN code} PIN_CODE_ATTEMPTS_ENDED {PIN code attempts exceeded} PIN_CODE_NOT_CONFIRMED {PIN code not confirmed} other {Unknown error}}'**
+  String pinCodeError(String error);
+
+  /// No description provided for @enterPinCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter PIN-code'**
+  String get enterPinCode;
+
+  /// No description provided for @repeatPinCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Repeat PIN-code'**
+  String get repeatPinCode;
+
+  /// No description provided for @settingPinCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Settings PIN-code'**
+  String get settingPinCode;
+
+  /// No description provided for @reset.
+  ///
+  /// In en, this message translates to:
+  /// **'Reset'**
+  String get reset;
+
+  /// No description provided for @resetTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure?'**
+  String get resetTitle;
+
+  /// No description provided for @resetDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'After resetting the PIN-code, you will need to log in.'**
+  String get resetDescription;
+
+  /// No description provided for @useBiometricsToLogin.
+  ///
+  /// In en, this message translates to:
+  /// **'Use biometrics to login?'**
+  String get useBiometricsToLogin;
+
+  /// No description provided for @localizedReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your identity to continue'**
+  String get localizedReason;
+
+  /// No description provided for @biometrySignInTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign in confirmation'**
+  String get biometrySignInTitle;
+
+  /// No description provided for @biometrySignInHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm your identity using biometrics'**
+  String get biometrySignInHint;
+
+  /// No description provided for @biometryCancelButton.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get biometryCancelButton;
+
+  /// No description provided for @biometryLocalizedFallbackTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Use passcode'**
+  String get biometryLocalizedFallbackTitle;
 }
 
 class _AuthLocalizationsDelegate

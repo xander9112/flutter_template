@@ -2,19 +2,25 @@ import 'dart:async';
 
 import 'package:app/features/debug/_debug.dart';
 import 'package:auth/src/_src.dart';
-import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_darwin/local_auth_darwin.dart';
 import 'package:rxdart/subjects.dart';
 
 class AuthManager extends IAuthManager<UserEntity> {
   AuthManager({
     required IDebugService debugService,
-    required this.authRepository,
-  }) : _debugService = debugService;
+    required IAuthRepository<TokensDTO, UserEntity> authRepository,
+    required IBiometricRepository biometricRepository,
+  }) : _debugService = debugService,
+       _authRepository = authRepository,
+       _biometricRepository = biometricRepository;
 
   final IDebugService _debugService;
 
-  final IAuthRepository<TokensDTO, UserEntity> authRepository;
+  final IAuthRepository<TokensDTO, UserEntity> _authRepository;
+
+  final IBiometricRepository _biometricRepository;
 
   @override
   BehaviorSubject<UserEntity> user = BehaviorSubject.seeded(
@@ -34,7 +40,14 @@ class AuthManager extends IAuthManager<UserEntity> {
 
   bool _locked = true;
 
+  bool get locked => settings.useLocalAuth && _locked;
+
+  set locked(bool value) {
+    _locked = value;
+  }
+
   DateTime? _blockedUntil;
+
   Timer? _unblockTimer;
 
   @override
@@ -55,26 +68,34 @@ class AuthManager extends IAuthManager<UserEntity> {
   BehaviorSubject<OnboardingStatus> get onboardingStatus => _onboardingStatus;
 
   @override
+  Future<bool> get hasPinCode => _authRepository.hasPinCode();
+
+  @override
   AuthSettings settings = const AuthSettings(
-    useBiometric: true,
-    useLocalAuth: true,
+    useBiometric: false,
+    useLocalAuth: false,
   );
 
   @override
   Future<void> init() async {
-    // await authRepository.blockUser(DateTime.now().add(Duration(seconds: 10)));
-
     await _checkUserBlocking();
 
     await _initSettings();
 
     await _checkOnboarding();
 
-    final userResult = await authRepository.getCurrentUser();
+    final userResult = await _authRepository.getCurrentUser();
 
-    userResult.fold((error) {}, (r) {
-      print(r);
-      user.add(r);
+    await userResult.fold((error) {}, (response) async {
+      user.add(response);
+
+      if (settings.useLocalAuth) {
+        final hasPinCode = await _authRepository.hasPinCode();
+
+        if (!hasPinCode) {
+          await signOut();
+        }
+      }
     });
 
     _checkStatus();
@@ -82,7 +103,7 @@ class AuthManager extends IAuthManager<UserEntity> {
 
   @override
   Future<void> finishOnboarding() async {
-    await authRepository.finishOnboarding();
+    await _authRepository.finishOnboarding();
 
     await _checkOnboarding();
 
@@ -90,11 +111,11 @@ class AuthManager extends IAuthManager<UserEntity> {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> signIn(
+  Future<Either<AuthFailure, UserEntity>> signIn(
     String login,
     String password,
   ) async {
-    final result = await authRepository.signIn(login, password);
+    final result = await _authRepository.signIn(login, password);
 
     return result.fold(
       (error) {
@@ -103,7 +124,7 @@ class AuthManager extends IAuthManager<UserEntity> {
         return Left(error);
       },
       (response) async {
-        final currentUser = await authRepository.getCurrentUser();
+        final currentUser = await _authRepository.getCurrentUser();
 
         return currentUser.fold(Left.new, (r) {
           user.add(r);
@@ -117,11 +138,11 @@ class AuthManager extends IAuthManager<UserEntity> {
   }
 
   @override
-  Future<Either<Failure, UserEntity>> signUp(
+  Future<Either<AuthFailure, UserEntity>> signUp(
     String login,
     String password,
   ) async {
-    final result = await authRepository.signUp(login, password);
+    final result = await _authRepository.signUp(login, password);
 
     return result.fold(
       (error) {
@@ -130,7 +151,7 @@ class AuthManager extends IAuthManager<UserEntity> {
         return Left(error);
       },
       (response) async {
-        final currentUser = await authRepository.getCurrentUser();
+        final currentUser = await _authRepository.getCurrentUser();
 
         return currentUser.fold(Left.new, (r) {
           user.add(r);
@@ -145,15 +166,15 @@ class AuthManager extends IAuthManager<UserEntity> {
 
   @override
   Future<void> signOut() async {
-    await authRepository.signOut();
+    await _authRepository.signOut();
 
     user.add(const UserEntity.notAuthenticated());
 
     await _checkOnboarding();
 
-    await authRepository.unBlocUser();
+    await _authRepository.unBlocUser();
 
-    _locked = true;
+    locked = true;
 
     _checkStatus();
   }
@@ -166,22 +187,89 @@ class AuthManager extends IAuthManager<UserEntity> {
 
   @override
   Future<void> lock() async {
-    _locked = true;
+    locked = true;
 
     _checkStatus();
   }
 
   @override
-  Future<Either<Failure, void>> unlock(String pinCode) async {
-    _locked = !(await authRepository.comparePinCode(pinCode));
+  Future<void> setPinCode(String value) async {
+    return _authRepository.setPinCode(value);
+  }
 
-    if (_locked) {
-      return Left(AuthFailure(code: 'UNKNOWN', message: 'Wrong pinCode'));
+  @override
+  Future<Either<AuthFailure, void>> unlock({
+    String? localizedReason,
+    String? pinCode,
+    Iterable<AuthMessages> authMessages = const <AuthMessages>[
+      IOSAuthMessages(),
+      AndroidAuthMessages(),
+    ],
+  }) async {
+    if (pinCode == null) {
+      if (!settings.useBiometric) {
+        return const Right(null);
+      }
+
+      return _unlockByBiometry(
+        localizedReason: localizedReason ?? 'Auth req',
+        authMessages: authMessages,
+      );
     }
+
+    try {
+      locked = !(await _authRepository.comparePinCode(pinCode));
+
+      _checkStatus();
+
+      return const Right(null);
+    } on AuthFailure catch (error) {
+      if (error.code == AuthErrors.pinCodeAttemptsEnded) {
+        await signOut();
+      }
+
+      return Left(error);
+    }
+  }
+
+  Future<Either<AuthFailure, void>> _unlockByBiometry({
+    required String localizedReason,
+    Iterable<AuthMessages> authMessages = const <AuthMessages>[
+      IOSAuthMessages(),
+      AndroidAuthMessages(),
+    ],
+  }) async {
+    final biometricModel = await _biometricRepository.getBiometricModel();
+
+    if (biometricModel.status != BiometricStatus.available ||
+        !(biometricModel.useBiometric ?? false)) {
+      return const Right(null);
+    }
+
+    final result = await _biometricRepository.onInitBiometric(
+      localizedReason: localizedReason,
+      authMessages: authMessages,
+    );
+
+    locked = !(result ?? false);
 
     _checkStatus();
 
     return const Right(null);
+  }
+
+  @override
+  Future<BiometricSupportModel> getBiometricSupportModel() async {
+    if (settings.useBiometric) {
+      return const BiometricSupportModel(useBiometric: false);
+    }
+
+    return _biometricRepository.getBiometricModel();
+  }
+
+  @override
+  Future<void> setUseBiometry(bool value) async {
+    await _biometricRepository.setUseBiometric(value: value);
   }
 
   void _checkStatus() {
@@ -199,22 +287,22 @@ class AuthManager extends IAuthManager<UserEntity> {
           : AuthStatus.authenticated,
     );
 
-    _lockStatus.add(_locked ? LockStatus.locked : LockStatus.unlocked);
+    _lockStatus.add(locked ? LockStatus.locked : LockStatus.unlocked);
 
     notifyListeners();
   }
 
   Future<void> _initSettings() async {
-    final useBiometric = await authRepository.useBiometric;
+    final useBiometric = await _authRepository.useBiometric;
 
     settings = AuthSettings(
       useBiometric: useBiometric ?? settings.useBiometric,
-      useLocalAuth: await authRepository.useLocalAuth(),
+      useLocalAuth: await _authRepository.useLocalAuth(),
     );
   }
 
   Future<void> _checkOnboarding() async {
-    final watched = await authRepository.watchedOnboarding();
+    final watched = await _authRepository.watchedOnboarding();
 
     onboardingStatus.add(
       watched ? OnboardingStatus.completed : OnboardingStatus.notCompleted,
@@ -222,7 +310,7 @@ class AuthManager extends IAuthManager<UserEntity> {
   }
 
   Future<void> _checkUserBlocking() async {
-    _blockedUntil = await authRepository.getBlockTime();
+    _blockedUntil = await _authRepository.getBlockTime();
 
     if (_blockedUntil != null) {
       if (_blockedUntil!.difference(DateTime.now()).inSeconds > 0) {
@@ -244,113 +332,4 @@ class AuthManager extends IAuthManager<UserEntity> {
       }
     });
   }
-  // final IDebugService _debugService;
-
-  // final bool isMustLogin = true;
-  // final bool isMustVerify = true;
-
-  // static const _kOnboardingDone = 'onboarding_done';
-  // static const _kHasSession = 'has_session';
-  // static const _kHasPin = 'has_pin';
-
-  // final BehaviorSubject<AuthStage> _stage = BehaviorSubject.seeded(
-  //   AuthStage.unauthenticated,
-  // );
-
-  // BehaviorSubject<AuthStage> get stage => _stage;
-
-  // late SharedPreferences _prefs;
-
-  // List<PageRouteInfo>? _pendingRoutes;
-
-  // List<PageRouteInfo>? get pendingRoutes => _pendingRoutes;
-
-  // bool get isSignIn => stage.value == AuthStage.authenticated;
-
-  // void savePending(List<RouteMatch> matches) {
-  //   if (matches.isEmpty) return;
-  //   _pendingRoutes = matches.map((e) => e.toPageRouteInfo()).toList();
-  // }
-
-  // void setPendingRoutes(List<PageRouteInfo> routes) {
-  //   _pendingRoutes = routes;
-  // }
-
-  // List<PageRouteInfo> consumePendingRoutes() {
-  //   final routes = _pendingRoutes;
-  //   _pendingRoutes = null;
-  //   return routes ?? [];
-  // }
-
-  // // stage setters
-  // void setStage(AuthStage value) {
-  //   if (_stage.value == value) return;
-  //   _stage.add(value);
-  //   notifyListeners();
-  // }
-
-  // Future<void> init() async {
-  //   _prefs = await SharedPreferences.getInstance();
-  //   _debugService.logDebug('Auth init');
-  //   await _prefs.remove(_kOnboardingDone);
-
-  //   await Future.delayed(Duration(seconds: 2));
-
-  //   _checkStatus();
-  // }
-
-  // Future<void> _checkStatus() async {
-  //   final hasSession = _prefs.getBool(_kHasSession) ?? false;
-  //   final onboardingDone = _prefs.getBool(_kOnboardingDone) ?? false;
-  //   final hasPin = isMustVerify ? _prefs.getBool(_kHasPin) ?? true : false;
-
-  //   if (!hasSession) {
-  //     _stage.add(AuthStage.unauthenticated);
-  //   } else if (hasPin) {
-  //     _stage.add(AuthStage.locked);
-  //   } else if (!onboardingDone) {
-  //     _stage.add(AuthStage.onboarding);
-  //   } else {
-  //     _stage.add(AuthStage.authenticated);
-  //   }
-
-  //   notifyListeners();
-  // }
-
-  // // ---------- FLOWS ----------
-
-  // Future<void> completeOnboarding() async {
-  //   await _prefs.setBool(_kOnboardingDone, true);
-  //   _checkStatus();
-  // }
-
-  // Future<void> signIn() async {
-  //   await _prefs.setBool(_kHasSession, true);
-  //   if (isMustVerify) {
-  //     _stage.add(AuthStage.locked);
-  //   } else {
-  //     _stage.add(AuthStage.authenticated);
-  //   }
-  //   notifyListeners();
-  // }
-
-  // Future<void> signUp() async {
-  //   await signIn();
-  // }
-
-  // Future<void> unlock() async {
-  //   _stage.add(AuthStage.authenticated);
-
-  //   notifyListeners();
-  // }
-
-  // Future<void> lock() async {
-  //   _stage.add(AuthStage.locked);
-  //   notifyListeners();
-  // }
-
-  // Future<void> signOut() async {
-  //   await _prefs.remove(_kHasSession);
-  //   _checkStatus();
-  // }
 }

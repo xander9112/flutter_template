@@ -47,9 +47,8 @@ class _PinCodeCreateFormState extends State<PinCodeCreateForm> {
             useBiometric: false,
             onPressedNumber: onPressedNumber,
             onReset: onPressedReset,
-            onDelete: onPressedDelete,
-            reset: 'reset',
-            delete: 'delete',
+            onDelete: code.isNotEmpty ? onPressedDelete : null,
+            reset: context.authLocalizations.reset,
           ),
         ),
       ],
@@ -66,6 +65,10 @@ class _PinCodeCreateFormState extends State<PinCodeCreateForm> {
   }
 
   void onPressedDelete() {
+    if (code.isEmpty) {
+      return;
+    }
+
     setState(() {
       code = code.substring(0, code.length - 1);
     });

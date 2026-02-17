@@ -1,6 +1,8 @@
 import 'package:auth/src/_src.dart';
 import 'package:flutter/foundation.dart';
 import 'package:local_auth/local_auth.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_darwin/local_auth_darwin.dart';
 
 class BiometricRepository implements IBiometricRepository {
   BiometricRepository({required AuthStorage authStorage})
@@ -11,26 +13,44 @@ class BiometricRepository implements IBiometricRepository {
   LocalAuthentication get localAuth => LocalAuthentication();
 
   @override
-  Future<bool> authenticate() async {
-    try {
-      await localAuth.stopAuthentication();
-
-      return await localAuth.authenticate(
-        localizedReason: 'signInToAccessTheApp',
-        authMessages: [],
-      );
-    } catch (_) {
-      return false;
-    }
-  }
-
-  @override
   Future<bool> get isAvailable {
     if (!kIsWeb) {
       return localAuth.canCheckBiometrics;
     }
 
     return Future<bool>.value(false);
+  }
+
+  @override
+  Future<bool> get isBiometricSupport async {
+    try {
+      return await isAvailable && await isDeviceSupported;
+    } catch (_) {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> get isDeviceSupported => localAuth.isDeviceSupported();
+
+  @override
+  Future<bool> authenticate({
+    required String localizedReason,
+    Iterable<AuthMessages> authMessages = const <AuthMessages>[
+      IOSAuthMessages(),
+      AndroidAuthMessages(),
+    ],
+  }) async {
+    try {
+      await localAuth.stopAuthentication();
+
+      return await localAuth.authenticate(
+        localizedReason: localizedReason,
+        authMessages: authMessages,
+      );
+    } catch (_) {
+      return false;
+    }
   }
 
   @override
@@ -91,19 +111,13 @@ class BiometricRepository implements IBiometricRepository {
   }
 
   @override
-  Future<bool> get isBiometricSupport async {
-    try {
-      return await isAvailable && await isDeviceSupported;
-    } catch (_) {
-      return false;
-    }
-  }
-
-  @override
-  Future<bool> get isDeviceSupported => localAuth.isDeviceSupported();
-
-  @override
-  Future<bool?> onInitBiometric() async {
+  Future<bool?> onInitBiometric({
+    required String localizedReason,
+    Iterable<AuthMessages> authMessages = const <AuthMessages>[
+      IOSAuthMessages(),
+      AndroidAuthMessages(),
+    ],
+  }) async {
     if (!(await isAvailable)) {
       return null;
     }
@@ -112,7 +126,10 @@ class BiometricRepository implements IBiometricRepository {
       return null;
     }
 
-    final didAuthenticate = await authenticate();
+    final didAuthenticate = await authenticate(
+      localizedReason: localizedReason,
+      authMessages: authMessages,
+    );
 
     return didAuthenticate;
   }

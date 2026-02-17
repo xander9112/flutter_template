@@ -39,8 +39,12 @@ melos:
     gen-l10n:
       run: melos exec -c 1 --file-exists="l10n.yaml" -- flutter gen-l10n
     flutter-flavorizr:
-      run: melos exec -c 1 --file-exists="flavorizr.yaml" -- flutter pub run flutter_flavorizr -f
+      run: melos exec -c 1 --file-exists="flavorizr.yaml" -- flutter pub run
+        flutter_flavorizr -f
     flutter-launcher-icons:
-      run: melos exec -c 1 --file-exists="flutter_launcher_icons.yaml" -- dart run flutter_launcher_icons
+      run:
+        melos exec -c 1 --file-exists="flutter_launcher_icons.yaml" -- dart run
+        flutter_launcher_icons
     gen_icons_and_flavors:
-      run: melos exec -c 1 --file-exists="gen_icons_and_flavor.dart" -- dart ./gen_icons_and_flavor.dart
+      run: melos exec -c 1 --file-exists="gen_icons_and_flavor.dart" -- dart
+        ./gen_icons_and_flavor.dart

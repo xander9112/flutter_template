@@ -5,6 +5,7 @@ import 'package:app/features/debug/debug_service.dart';
 import 'package:app/features/debug/i_debug_service.dart';
 import 'package:app/features/error/error_screen.dart';
 import 'package:app/runner/timer_runner.dart';
+import 'package:core/core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,6 +50,7 @@ class AppRunner {
             _debugService,
             diContainer.scopes.authScopeHolder.scope!.authManager,
             isAuthRequired: diContainer.appConfig.isAuthRequired,
+            navigatorKey: DialogService.navigatorKey,
           ),
         ),
       );

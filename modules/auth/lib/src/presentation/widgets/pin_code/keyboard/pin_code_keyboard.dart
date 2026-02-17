@@ -21,9 +21,9 @@ class PinCodeKeyboard extends StatelessWidget {
   final VoidCallback? onReset;
   final VoidCallback? onDelete;
   final VoidCallback? onBiometricPressed;
-  final String? icon;
+  final Widget? icon;
   final String? reset;
-  final String? delete;
+  final Widget? delete;
 
   @override
   Widget build(BuildContext context) {
@@ -98,20 +98,18 @@ class PinCodeKeyboard extends StatelessWidget {
                 onPressedNumber: () => onPressedNumber?.call('0'),
                 child: const KeyItemNumber(text: '0'),
               ),
-              if (!useBiometric)
+              if (!useBiometric && onDelete != null)
                 KeyItem(
                   onPressedNumber: onDelete,
-                  child: Text(
-                    delete ?? 'Delete',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                ),
-              if (useBiometric && icon != null)
+                  child: delete ?? const Icon(Icons.backspace),
+                )
+              else if (useBiometric && icon != null)
                 KeyItem(
                   onPressedNumber: onBiometricPressed,
-                  // child: UiIcon(icon!),
-                ),
+                  child: icon,
+                )
+              else
+                const KeyItem(child: SizedBox.shrink()),
             ],
           ),
         ],

@@ -46,14 +46,14 @@ class UiConfirmDialog extends StatelessWidget {
         children: <Widget>[
           Expanded(
             child: ElevatedButton(
-              child: Text(no ?? 'No'),
+              child: Text(no ?? context.uiKitLocalizations.no),
               onPressed: () => onPressedCancel(context),
             ),
           ),
-          const SizedBox(width: 8),
+          const SizedBox(width: Insets.l),
           Expanded(
-            child: ElevatedButton(
-              child: Text(yes ?? 'Yes'),
+            child: FilledButton(
+              child: Text(yes ?? context.uiKitLocalizations.yes),
               onPressed: () => onPressedOk(context),
             ),
           ),

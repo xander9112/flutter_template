@@ -3,6 +3,7 @@ export 'package:bloc/bloc.dart';
 export 'package:dartz/dartz.dart' hide State;
 export 'package:dio/dio.dart';
 export 'package:envied/envied.dart';
+export 'package:equatable/equatable.dart';
 export 'package:flutter_bloc/flutter_bloc.dart';
 export 'package:flutter_localizations/flutter_localizations.dart';
 export 'package:freezed_annotation/freezed_annotation.dart';

@@ -5,7 +5,7 @@ flavors:
     android:
       applicationId: "com.example.quiz.dev"
     ios:
-      bundleId: "com.example.quiz.dev"
+      bundleId: "com.neoflex.neoportal.dev"
   stage:
     app:
       name: "XelaApp (stg)"

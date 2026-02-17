@@ -11,9 +11,15 @@ class SignInForm extends FormWorker<void> {
 
   @override
   Future<FormGroup> init([void initialValue]) async {
-    loginControl = FormControl<String>(validators: [Validators.required]);
+    loginControl = FormControl<String>(
+      validators: [Validators.required],
+      value: 'demo',
+    );
 
-    passwordControl = FormControl<String>(validators: [Validators.required]);
+    passwordControl = FormControl<String>(
+      validators: [Validators.required],
+      value: 'demo',
+    );
 
     return form = FormGroup({
       SignInForm.loginField: loginControl,

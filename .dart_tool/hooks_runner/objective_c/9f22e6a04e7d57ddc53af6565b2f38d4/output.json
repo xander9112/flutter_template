@@ -2,7 +2,7 @@
   "assets": [
     {
       "encoding": {
-        "file": "/Users/xander9112/dev/_mobile/xela/.dart_tool/hooks_runner/shared/objective_c/build/9f22e6a04e/objective_c.dylib",
+        "file": "/Users/xander9112/dev/_mobile/flutter_template/.dart_tool/hooks_runner/shared/objective_c/build/9f22e6a04e/objective_c.dylib",
         "id": "package:objective_c/objective_c.dylib",
         "link_mode": {
           "type": "dynamic_loading_bundle"
@@ -42,5 +42,5 @@
     "/Users/xander9112/.pub-cache/hosted/pub.dev/objective_c-9.3.0/src/ffi.h"
   ],
   "status": "success",
-  "timestamp": "2026-02-12 07:52:01.000"
+  "timestamp": "2026-02-12 14:53:09.000"
 }

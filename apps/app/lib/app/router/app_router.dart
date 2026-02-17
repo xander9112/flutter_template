@@ -31,10 +31,12 @@ class AppRouter {
     IDebugService debugService,
     IAuthManager<UserEntity> authManager, {
     bool isAuthRequired = true,
+    GlobalKey<NavigatorState>? navigatorKey,
   }) {
     return AppAutoRouter(
       authManager: authManager,
       isAuthRequired: isAuthRequired,
+      navigatorKey: navigatorKey,
     );
   }
 }
@@ -45,6 +47,7 @@ final AuthRouter _authRouter = AuthRouter();
 class AppAutoRouter extends RootStackRouter {
   AppAutoRouter({
     required IAuthManager<UserEntity> authManager,
+    super.navigatorKey,
     this.isAuthRequired = true,
   }) : _authManager = authManager;
   final IAuthManager<UserEntity> _authManager;

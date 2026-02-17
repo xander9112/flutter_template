@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auth/auth.dart';
 import 'package:auto_route/auto_route.dart';
 
@@ -15,24 +17,26 @@ class AuthGuard extends AutoRouteGuard {
     }
 
     if (authManager.authStatus.value.isBlocked) {
-      router.replace(const NoAccessRoute());
+      unawaited(router.replace(const NoAccessRoute()));
 
       return;
     }
 
     if (authManager.onboardingStatus.value.isNotCompleted) {
-      router.replace(const OnboardingRoute());
+      unawaited(router.replace(const OnboardingRoute()));
 
       return;
     }
 
     if (authManager.authStatus.value.isUnauthenticated) {
-      router.replace(const SignInRoute());
+      unawaited(router.replace(const SignInRoute()));
+
       return;
     }
 
     if (authManager.lockStatus.value.isLocked) {
-      router.replace(const VerifyRoute());
+      unawaited(router.replace(const VerifyRoute()));
+
       return;
     }
 

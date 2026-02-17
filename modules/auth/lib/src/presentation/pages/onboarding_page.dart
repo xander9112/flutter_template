@@ -40,7 +40,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 onPressed: () {
                   unawaited(
                     controller.nextPage(
-                      duration: const Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 100),
                       curve: Curves.easeIn,
                     ),
                   );
@@ -53,7 +53,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 onPressed: () {
                   unawaited(
                     controller.nextPage(
-                      duration: const Duration(milliseconds: 300),
+                      duration: const Duration(milliseconds: 100),
                       curve: Curves.easeIn,
                     ),
                   );

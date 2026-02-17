@@ -23,7 +23,9 @@
     <key>CFBundleVersion</key>
     <string>$(FLUTTER_BUILD_NUMBER)</string>
     <key>LSRequiresIPhoneOS</key>
-    <true/>
+    <true />
+    <key>NSFaceIDUsageDescription</key>
+    <string>Why is my app authenticating using face id?</string>
     <key>UILaunchStoryboardName</key>
     <string>$(ASSET_PREFIX)LaunchScreen</string>
     <key>UIMainStoryboardFile</key>
@@ -42,8 +44,8 @@
       <string>UIInterfaceOrientationLandscapeRight</string>
     </array>
     <key>CADisableMinimumFrameDurationOnPhone</key>
-    <true/>
+    <true />
     <key>UIApplicationSupportsIndirectInputEvents</key>
-    <true/>
+    <true />
   </dict>
 </plist>

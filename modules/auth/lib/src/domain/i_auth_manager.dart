@@ -1,9 +1,10 @@
 import 'dart:async';
 
 import 'package:auth/src/_src.dart';
-import 'package:core/core.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/widgets.dart';
+import 'package:local_auth_android/local_auth_android.dart';
+import 'package:local_auth_darwin/local_auth_darwin.dart';
 import 'package:rxdart/subjects.dart';
 
 abstract class IAuthManager<U> extends ChangeNotifier {
@@ -17,23 +18,38 @@ abstract class IAuthManager<U> extends ChangeNotifier {
 
   int get remainingSeconds;
 
+  Future<bool> get hasPinCode;
+
   AuthSettings get settings;
 
   Future<void> init();
 
   Future<void> finishOnboarding();
 
-  Future<Either<Failure, U>> signIn(String login, String password);
+  Future<Either<AuthFailure, U>> signIn(String login, String password);
 
-  Future<Either<Failure, U>> signUp(String login, String password);
+  Future<Either<AuthFailure, U>> signUp(String login, String password);
 
   Future<void> signOut();
 
   Future<void> lock();
 
-  Future<Either<Failure, void>> unlock(String pinCode);
+  Future<void> setPinCode(String value);
+
+  Future<Either<AuthFailure, void>> unlock({
+    String? localizedReason,
+    String? pinCode,
+    Iterable<AuthMessages> authMessages = const <AuthMessages>[
+      IOSAuthMessages(),
+      AndroidAuthMessages(),
+    ],
+  });
+
+  Future<void> setUseBiometry(bool value);
 
   Future<void> block();
 
   Future<void> unBlock();
+
+  Future<BiometricSupportModel> getBiometricSupportModel();
 }

@@ -3,5 +3,18 @@
     "signInTitle": "Sign in",
     "signUpTitle": "Sign up",
     "login": "Login",
-    "password": "Password"
+    "password": "Password",
+    "pinCodeError": "{error, select, PIN_CODE_NOT_CORRECT {Incorrect PIN code} PIN_CODE_ATTEMPTS_ENDED {PIN code attempts exceeded} PIN_CODE_NOT_CONFIRMED {PIN code not confirmed} other {Unknown error}}",
+    "enterPinCode": "Enter PIN-code",
+    "repeatPinCode": "Repeat PIN-code",
+    "settingPinCode": "Settings PIN-code",
+    "reset": "Reset",
+    "resetTitle": "Are you sure?",
+    "resetDescription": "After resetting the PIN-code, you will need to log in.",
+    "useBiometricsToLogin": "Use biometrics to login?",
+    "localizedReason": "Confirm your identity to continue",
+    "biometrySignInTitle": "Sign in confirmation",
+    "biometrySignInHint": "Confirm your identity using biometrics",
+    "biometryCancelButton": "Cancel",
+    "biometryLocalizedFallbackTitle": "Use passcode"
 }

@@ -2,8 +2,10 @@ import 'package:app/app/_app.dart';
 import 'package:app/app/theme/app_theme.dart';
 import 'package:app/features/settings/_settings.dart';
 import 'package:auth/auth.dart';
+import 'package:core/core.dart';
 import 'package:dependencies/dependencies.dart';
 import 'package:flutter/material.dart';
+import 'package:ui_kit/ui_kit.dart';
 
 class AppRoot extends StatelessWidget {
   const AppRoot({required this.diContainer, required this.router, super.key});
@@ -27,11 +29,14 @@ class AppRoot extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
 
+              ...UiKitLocalizationConfig.delegates,
               ...AuthLocalizationConfig.delegates,
+              ...CoreLocalizationConfig.delegates,
             ],
             locale: state.locale,
             supportedLocales: const [
               ...AuthLocalizations.supportedLocales,
+              ...CoreLocalizationConfig.supportedLocales,
             ],
             routerConfig: router.config(
               includePrefixMatches: true,

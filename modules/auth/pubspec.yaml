@@ -18,6 +18,8 @@ dependencies:
   flutter_localization: 0.3.3
   intl: 0.20.2
   local_auth: 3.0.0
+  local_auth_android: 2.0.4
+  local_auth_darwin: 2.0.2
   ui_kit:
     path: ../../shared/ui_kit
 

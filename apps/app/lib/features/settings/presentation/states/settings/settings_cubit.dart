@@ -29,12 +29,22 @@ class SettingsCubit extends Cubit<SettingsState> {
       default:
         emit(state.copyWith(themeMode: ThemeMode.system));
     }
+
+    final _localeStr = _preferences.getString('locale');
+
+    emit(state.copyWith(locale: Locale(_localeStr ?? 'en')));
   }
 
   void changeTheme(ThemeMode value) {
     _preferences.setString('theme_mode', value.name);
 
     emit(state.copyWith(themeMode: value));
+  }
+
+  void changeLocale(Locale value) {
+    _preferences.setString('locale', value.languageCode);
+
+    emit(state.copyWith(locale: value));
   }
 
   Future<void> initSettingsFromServer() async {
